@@ -43,7 +43,6 @@
                                 <connections>
                                     <outlet property="itemTitleLabel" destination="0Qj-cb-uyc" id="fqv-oV-VXS"/>
                                     <outlet property="passedDays" destination="oaN-yD-zg8" id="vEv-7u-X4R"/>
-                                    <segue destination="5yc-8x-j0U" kind="show" identifier="" id="kAX-CN-WuD"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -61,6 +60,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="itemListTableView" destination="DMv-Gs-CbJ" id="3KI-73-9fo"/>
+                        <segue destination="5yc-8x-j0U" kind="show" identifier="toItemContentVC" id="X0m-Pz-9iI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SUo-Mx-Tmh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
