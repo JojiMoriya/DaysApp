@@ -1,0 +1,6 @@
+framework module Pods_HowManyDaysDoItPassed {
+  umbrella header "Pods-HowManyDaysDoItPassed-umbrella.h"
+
+  export *
+  module * { export * }
+}
