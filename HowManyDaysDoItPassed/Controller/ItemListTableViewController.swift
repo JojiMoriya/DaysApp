@@ -13,20 +13,20 @@ class ItemListTableViewController: UITableViewController {
     
     private let realm = try! Realm()
     private var itemList: Results<ItemData>!
+    private var selectedIndexPathRow = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setRealm()
-        
         print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true))
-
     }
     
+    //Realmデータの全情報を取得する
     private func setRealm() {
         itemList = realm.objects(ItemData.self)
     }
     
-    func addRealm(itemTitle: String, launchDate: Date, itemMemo: String) {
+    private func addRealm(itemTitle: String, launchDate: Date, itemMemo: String) {
         let addItem = ItemData()
         addItem.itemTitle = itemTitle
         addItem.launchDate = launchDate
@@ -39,11 +39,11 @@ class ItemListTableViewController: UITableViewController {
     @IBAction func addSegue(_ unwindSegue: UIStoryboardSegue) {
         guard unwindSegue.identifier == "addItemToItemListVC" else { return }
         let addItemVC = unwindSegue.source as! ItemAddViewController
-        /// append
         addRealm(itemTitle: addItemVC.itemTitle, launchDate: addItemVC.launchDate, itemMemo: addItemVC.itemMemo)
         itemListTableView.reloadData()
     }
     
+    // 経過した日にちをStringで返すメソッド
     func calcInterval(date:Date) -> String {
         let interval = Date().timeIntervalSince(date)
         let time = Int(interval)
@@ -56,7 +56,6 @@ class ItemListTableViewController: UITableViewController {
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
- 
         itemList.count
     }
 
@@ -68,5 +67,17 @@ class ItemListTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndexPathRow = indexPath.row//閲覧するCellのindexPathを取得
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "toItemContentVC", sender: selectedIndexPathRow)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toItemContentVC" {
+            let itemContentVC =  segue.destination as! itemContentViewController
+            itemContentVC.contentItemIndexPath = sender as! Int
+        }
+    }
 
 }
