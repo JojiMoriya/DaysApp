@@ -19,8 +19,8 @@ class ItemListTableViewController: UITableViewController {
         super.viewDidLoad()
         itemListTableView.rowHeight = 70
         setRealm()
-        
         navigationItem.leftBarButtonItem = editButtonItem
+        editButtonItem.title = "編集"
         print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true))
     }
     
@@ -76,13 +76,29 @@ class ItemListTableViewController: UITableViewController {
         itemListTableView.setEditing(editing, animated: animated)
     }
     
-    //セル画が編集されたら呼ばれる
+    //セルが編集されたら呼ばれる
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        let deleteItem = itemList[indexPath.row]
-        try! realm.write {
-            realm.delete(deleteItem)
-        }
-        itemListTableView.deleteRows(at: [indexPath], with: .fade)
+        let alert: UIAlertController = UIAlertController(title: "注意", message: "削除してよろしいですか？", preferredStyle:  UIAlertController.Style.alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            let deleteItem = self.itemList[indexPath.row]
+            try! self.realm.write {
+                self.realm.delete(deleteItem)
+            }
+            self.itemListTableView.deleteRows(at: [indexPath], with: .fade)
+        })
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            return
+        })
+        
+        alert.addAction(defaultAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
