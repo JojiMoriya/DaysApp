@@ -9,9 +9,11 @@ import UIKit
 import RealmSwift
 
 class itemContentViewController: UIViewController {
-    @IBOutlet weak var contentTitleLabel: UILabel!
+
+    @IBOutlet weak var contentTitleTextField: UITextField!
     @IBOutlet weak var contentPassedDaysLabel: UILabel!
     @IBOutlet weak var contentMemoTextView: UITextView!
+    @IBOutlet weak var contentLaunchDateLabel: UILabel!
     
     private let realm = try! Realm()
     private var itemList: Results<ItemData>!
@@ -22,15 +24,15 @@ class itemContentViewController: UIViewController {
         super.viewDidLoad()
         setRealm()
         
-        contentMemoTextView.layer.borderColor = UIColor.black.cgColor
+        contentMemoTextView.layer.borderColor = UIColor.lightGray.cgColor
         contentMemoTextView.layer.borderWidth = 2.0
-        contentMemoTextView.layer.cornerRadius = 10.0
+        contentMemoTextView.layer.cornerRadius = 5.0
         contentMemoTextView.layer.masksToBounds = true
         
-        contentTitleLabel.text = itemList[contentItemIndexPath].itemTitle
+        contentTitleTextField.text = itemList[contentItemIndexPath].itemTitle
         contentPassedDaysLabel.text = calcInterval(date: itemList[contentItemIndexPath].launchDate)
         contentMemoTextView.text = itemList[contentItemIndexPath].itemMemo
-
+        contentLaunchDateLabel.text = dateFormat(date: itemList[contentItemIndexPath].launchDate)
     }
     
     private func setRealm() {
@@ -46,6 +48,13 @@ class itemContentViewController: UIViewController {
         return dayInterval
     }
     
+    func dateFormat(date: Date) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") as Locale
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let dateString = dateFormatter.string(from: date)
+        return dateString
+    }
 
     /*
     // MARK: - Navigation
