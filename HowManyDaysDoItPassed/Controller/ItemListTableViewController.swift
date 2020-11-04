@@ -17,7 +17,10 @@ class ItemListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        itemListTableView.rowHeight = 70
         setRealm()
+        
+        navigationItem.leftBarButtonItem = editButtonItem
         print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true))
     }
     
@@ -67,9 +70,23 @@ class ItemListTableViewController: UITableViewController {
         return cell
     }
     
+    //編集ボタンがタップされた呼ばれる
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        itemListTableView.setEditing(editing, animated: animated)
+    }
+    
+    //セル画が編集されたら呼ばれる
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let deleteItem = itemList[indexPath.row]
+        try! realm.write {
+            realm.delete(deleteItem)
+        }
+        itemListTableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndexPathRow = indexPath.row//閲覧するCellのindexPathを取得
-        tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "toItemContentVC", sender: selectedIndexPathRow)
     }
     
@@ -79,5 +96,6 @@ class ItemListTableViewController: UITableViewController {
             itemContentVC.contentItemIndexPath = sender as! Int
         }
     }
+    
 
 }
