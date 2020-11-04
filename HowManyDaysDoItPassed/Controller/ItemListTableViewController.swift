@@ -79,7 +79,7 @@ class ItemListTableViewController: UITableViewController {
     //セルが編集されたら呼ばれる
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let alert: UIAlertController = UIAlertController(title: "注意", message: "削除してよろしいですか？", preferredStyle:  UIAlertController.Style.alert)
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+        let destructiveAction: UIAlertAction = UIAlertAction(title: "削除", style: UIAlertAction.Style.destructive, handler:{
             // ボタンが押された時の処理を書く（クロージャ実装）
             (action: UIAlertAction!) -> Void in
             let deleteItem = self.itemList[indexPath.row]
@@ -88,13 +88,13 @@ class ItemListTableViewController: UITableViewController {
             }
             self.itemListTableView.deleteRows(at: [indexPath], with: .fade)
         })
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.default, handler:{  // styleはあえてdefaultにした、ボタンの順番の都合上
             // ボタンが押された時の処理を書く（クロージャ実装）
             (action: UIAlertAction!) -> Void in
             return
         })
         
-        alert.addAction(defaultAction)
+        alert.addAction(destructiveAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
