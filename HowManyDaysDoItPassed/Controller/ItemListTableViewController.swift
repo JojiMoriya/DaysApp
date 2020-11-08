@@ -29,21 +29,24 @@ class ItemListTableViewController: UITableViewController {
         itemList = realm.objects(ItemData.self)
     }
     
-    private func addRealm(itemTitle: String, launchDate: Date, itemMemo: String) {
+    private func addRealm(itemTitle: String, launchDate: Date, limitDate: Date, itemMemo: String) {
         let addItem = ItemData()
         addItem.itemTitle = itemTitle
         addItem.launchDate = launchDate
+        addItem.limitDate = limitDate
         addItem.itemMemo = itemMemo
         try! realm.write() {
             realm.add(addItem)
         }
+        print(limitDate)
     }
     
     @IBAction func addSegue(_ unwindSegue: UIStoryboardSegue) {
         guard unwindSegue.identifier == "addItemToItemListVC" else { return }
         let addItemVC = unwindSegue.source as! ItemAddViewController
-        addRealm(itemTitle: addItemVC.itemTitle, launchDate: addItemVC.launchDate, itemMemo: addItemVC.itemMemo)
+        addRealm(itemTitle: addItemVC.itemTitle, launchDate: addItemVC.launchDate, limitDate: addItemVC.limitDate, itemMemo: addItemVC.itemMemo)
         itemListTableView.reloadData()
+        print(addItemVC.limitDate)
     }
     
     // 経過した日にちをStringで返すメソッド
