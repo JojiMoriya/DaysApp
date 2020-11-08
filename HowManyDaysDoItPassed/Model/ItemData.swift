@@ -10,5 +10,6 @@ import RealmSwift
 class ItemData: Object {
     @objc dynamic var itemTitle = ""
     @objc dynamic var launchDate = Date()
+    @objc dynamic var limitDate = Date()
     @objc dynamic var itemMemo = ""
 }
