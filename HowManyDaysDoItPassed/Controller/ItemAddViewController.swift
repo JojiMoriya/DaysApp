@@ -13,13 +13,14 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var itemMemoTextView: UITextView!
     @IBOutlet weak var firstView: UIView!
     @IBOutlet weak var secondView: UIView!
+    @IBOutlet weak var checkBoxButton: UIButton!
     
     var itemTitle = ""
     var launchDate = Date()
     var limitDate = Date()
     var itemMemo = ""
     
-    private var nowDateandTime:String!
+    private var nowDate:String!
     private var AselectedDate:Date!
     private var BselectedDate:Date!
     
@@ -28,8 +29,6 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
     
     private var BPicker: UIDatePicker!
     private var BTextField = UITextField()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,31 +39,36 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         makeNowDate()
         makePickerBaseView(true)
         makePickerBaseView(false)
-        
+         
+        isChecked = true
     }
     
-    @IBAction func addButtonPressed(_ sender: UIButton) {
-        itemTitle = itemTitleTextField.text ?? ""
-        itemMemo = itemMemoTextView.text
-        
-        let checkBox = CheckBox()
-        if checkBox.isChecked == true {
-            launchDate = AselectedDate
-            limitDate = BselectedDate
-        } else {
-            launchDate = AselectedDate
-            limitDate = AselectedDate
+//MARK: - CheckBoxの実装
+    let checkedImage = UIImage(named: "checkOn")! as UIImage
+    let uncheckedImage = UIImage(named: "checkOff")! as UIImage
+    
+    var isChecked: Bool = true {
+        didSet{
+            if isChecked == true {
+                checkBoxButton.setImage(checkedImage, for: UIControl.State.normal)
+            } else {
+                checkBoxButton.setImage(uncheckedImage, for: UIControl.State.normal)
+            }
         }
-        print(limitDate)
+    }
+ 
+    @IBAction func checkBoxButtonClicked(_ sender: UIButton) {
+        isChecked = !isChecked
     }
     
+    //MARK: - DatePickerの実装
     func makeNowDate(){
         //現在のデバイス時間をsystemTimeで出力
         let now = NSDate()
         let formatter = DateFormatter()
         formatter.timeZone = NSTimeZone.system
         formatter.dateFormat = "yyyy年M月d日"
-        nowDateandTime = formatter.string(from: now as Date)
+        nowDate = formatter.string(from: now as Date)
         
         //内部変数の更新
         AselectedDate = now as Date?
@@ -74,7 +78,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
     func makePickerBaseView(_ isA:Bool) {
         var myTextField = UITextField()
         myTextField = makeTextField(isA)
-        myTextField.text = isA ? "\(nowDateandTime!)" : "----年--月--日"
+        myTextField.text = isA ? "\(nowDate!)" : "----年--月--日"
         
         if isA {
             ATextField = myTextField
@@ -114,7 +118,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         let myPicker:UIDatePicker!
         myPicker = UIDatePicker()
         myPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 200.0)
-        myPicker.tag = isA ? 0 : 1
+        myPicker.tag = isA ? 1 : 2
         myPicker.datePickerMode = .date
         myPicker.locale = NSLocale(localeIdentifier: "ja_JP") as Locale
         myPicker.preferredDatePickerStyle = .wheels
@@ -139,17 +143,16 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         
         //テキストフィールドと内部変数の更新
         let mySelectedDate: NSString = formatter.string(from: sender.date) as NSString
-        if sender.tag == 0 {
+        if sender.tag == 1 {
             ATextField.text = mySelectedDate as String
             AselectedDate = sender.date
-        }
-        else {
+        } else {
             BTextField.text = mySelectedDate as String
             BselectedDate = sender.date
         }
         
         //ピッカー制約の更新
-        if sender.tag == 0 {
+        if sender.tag == 1 {
             BPicker.minimumDate = AselectedDate
             
             if AselectedDate > BselectedDate {
@@ -158,6 +161,22 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+
+    
+    @IBAction func addButtonPressed(_ sender: UIButton) {
+        itemTitle = itemTitleTextField.text ?? ""
+        itemMemo = itemMemoTextView.text
+        launchDate = AselectedDate
+        
+        if isChecked == true {
+            limitDate = BselectedDate
+        } else {
+            limitDate = AselectedDate
+        }
+    }
+    
+    
     
     
     

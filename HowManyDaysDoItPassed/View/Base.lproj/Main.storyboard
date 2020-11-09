@@ -112,12 +112,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AzI-yY-QzN" customClass="CheckBox" customModule="HowManyDaysDoItPassed" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AzI-yY-QzN">
                                 <rect key="frame" x="115" y="260" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="checkAction:" destination="YNH-t8-n5p" eventType="touchUpInside" id="vWZ-QP-u1O"/>
+                                    <action selector="buttonClicked:" destination="YNH-t8-n5p" eventType="touchUpInside" id="Wj8-YX-aEL"/>
+                                    <action selector="checkBoxButtonClicked:" destination="RAP-qR-KQD" eventType="touchUpInside" id="sFD-3r-Irg"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YBC-qc-Msy">
@@ -150,6 +151,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="checkBoxButton" destination="AzI-yY-QzN" id="2sd-lC-vgR"/>
                         <outlet property="firstView" destination="ZYR-NX-UHg" id="grP-I5-qPe"/>
                         <outlet property="itemMemoTextView" destination="YBC-qc-Msy" id="mGX-Yo-spV"/>
                         <outlet property="itemTitleTextField" destination="OfT-A2-zzp" id="5Co-Sw-qjT"/>
@@ -164,7 +166,7 @@
         <!--Item Content View Controller-->
         <scene sceneID="6Wj-Rx-kac">
             <objects>
-                <viewController id="5yc-8x-j0U" customClass="itemContentViewController" customModule="HowManyDaysDoItPassed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5yc-8x-j0U" customClass="ItemContentViewController" customModule="HowManyDaysDoItPassed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dqh-ch-8ek">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
