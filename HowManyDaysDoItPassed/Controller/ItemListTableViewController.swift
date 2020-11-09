@@ -38,7 +38,6 @@ class ItemListTableViewController: UITableViewController {
         try! realm.write() {
             realm.add(addItem)
         }
-        print(limitDate)
     }
     
     @IBAction func addSegue(_ unwindSegue: UIStoryboardSegue) {
@@ -46,7 +45,6 @@ class ItemListTableViewController: UITableViewController {
         let addItemVC = unwindSegue.source as! ItemAddViewController
         addRealm(itemTitle: addItemVC.itemTitle, launchDate: addItemVC.launchDate, limitDate: addItemVC.limitDate, itemMemo: addItemVC.itemMemo)
         itemListTableView.reloadData()
-        print(addItemVC.limitDate)
     }
     
     // 経過した日にちをStringで返すメソッド
@@ -59,12 +57,12 @@ class ItemListTableViewController: UITableViewController {
     }
     
     
-
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         itemList.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ItemTableViewCell
         let item = itemList[indexPath.row]
@@ -116,5 +114,5 @@ class ItemListTableViewController: UITableViewController {
         }
     }
     
-
+    
 }
