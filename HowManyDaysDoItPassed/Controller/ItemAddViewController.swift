@@ -33,10 +33,8 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        itemMemoTextView.layer.borderColor = UIColor.black.cgColor
-//        itemMemoTextView.layer.borderWidth = 2.0
+
         itemMemoTextView.layer.cornerRadius = 20
-//        itemMemoTextView.layer.masksToBounds = true
         itemMemoTextView.backgroundColor = UIColor.systemGray6
         
         makeNowDate()
@@ -55,7 +53,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
             limitDate = BselectedDate
         } else {
             launchDate = AselectedDate
-            limitDate = BselectedDate
+            limitDate = AselectedDate
         }
         print(limitDate)
     }
