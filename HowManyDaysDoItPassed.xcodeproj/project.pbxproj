@@ -15,7 +15,8 @@
 		363AF304254E6ADA00E3F3DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 363AF302254E6ADA00E3F3DB /* LaunchScreen.storyboard */; };
 		363AF30E254E6D5400E3F3DB /* ItemListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363AF30D254E6D5400E3F3DB /* ItemListTableViewController.swift */; };
 		363AF312254E736300E3F3DB /* ItemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363AF311254E736300E3F3DB /* ItemAddViewController.swift */; };
-		36E6639C25510CE700DACBDC /* itemContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E6639B25510CE700DACBDC /* itemContentViewController.swift */; };
+		364B113B25542A8200A9FEE1 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364B113A25542A8200A9FEE1 /* CheckBox.swift */; };
+		36E6639C25510CE700DACBDC /* ItemContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E6639B25510CE700DACBDC /* ItemContentViewController.swift */; };
 		36F99E0B254FF05B009B133D /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */; };
 		4B229956CA0706B73DD03A33 /* Pods_HowManyDaysDoItPassed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453C81123D1D915CDDD1114F /* Pods_HowManyDaysDoItPassed.framework */; };
 /* End PBXBuildFile section */
@@ -31,7 +32,8 @@
 		363AF305254E6ADA00E3F3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		363AF30D254E6D5400E3F3DB /* ItemListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListTableViewController.swift; sourceTree = "<group>"; };
 		363AF311254E736300E3F3DB /* ItemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddViewController.swift; sourceTree = "<group>"; };
-		36E6639B25510CE700DACBDC /* itemContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemContentViewController.swift; sourceTree = "<group>"; };
+		364B113A25542A8200A9FEE1 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		36E6639B25510CE700DACBDC /* ItemContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemContentViewController.swift; sourceTree = "<group>"; };
 		36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		453C81123D1D915CDDD1114F /* Pods_HowManyDaysDoItPassed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HowManyDaysDoItPassed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		719DD601E8C0F3B8473363A9 /* Pods-HowManyDaysDoItPassed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HowManyDaysDoItPassed.release.xcconfig"; path = "Target Support Files/Pods-HowManyDaysDoItPassed/Pods-HowManyDaysDoItPassed.release.xcconfig"; sourceTree = "<group>"; };
@@ -64,7 +66,7 @@
 			children = (
 				363AF30D254E6D5400E3F3DB /* ItemListTableViewController.swift */,
 				363AF311254E736300E3F3DB /* ItemAddViewController.swift */,
-				36E6639B25510CE700DACBDC /* itemContentViewController.swift */,
+				36E6639B25510CE700DACBDC /* ItemContentViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -115,6 +117,7 @@
 			children = (
 				36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */,
 				363AF2FD254E6AD700E3F3DB /* Main.storyboard */,
+				364B113A25542A8200A9FEE1 /* CheckBox.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -241,11 +244,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				364B113B25542A8200A9FEE1 /* CheckBox.swift in Sources */,
 				363AF2F8254E6AD700E3F3DB /* AppDelegate.swift in Sources */,
 				363AF312254E736300E3F3DB /* ItemAddViewController.swift in Sources */,
 				363AF2FA254E6AD700E3F3DB /* SceneDelegate.swift in Sources */,
 				363AF30E254E6D5400E3F3DB /* ItemListTableViewController.swift in Sources */,
-				36E6639C25510CE700DACBDC /* itemContentViewController.swift in Sources */,
+				36E6639C25510CE700DACBDC /* ItemContentViewController.swift in Sources */,
 				36F99E0B254FF05B009B133D /* ItemTableViewCell.swift in Sources */,
 				360F9AA7254EABC70040DA7B /* ItemData.swift in Sources */,
 			);
