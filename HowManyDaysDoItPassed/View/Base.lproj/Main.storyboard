@@ -172,7 +172,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7u-Uo-ATt">
-                                <rect key="frame" x="197" y="74" width="73" height="47"/>
+                                <rect key="frame" x="197" y="74" width="103" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -199,12 +199,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ugx-X6-8Qs">
-                                <rect key="frame" x="197" y="20" width="170" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="イベント名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcW-SB-Sox">
                                 <rect key="frame" x="20" y="27" width="87" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -255,6 +249,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ie3-vP-mj9">
+                                <rect key="frame" x="197" y="27" width="103" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XiY-VP-iM4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -264,7 +265,7 @@
                         <outlet property="contentLaunchDateLabel" destination="jPf-sC-Yas" id="cdF-TS-usT"/>
                         <outlet property="contentMemoTextView" destination="2aB-tR-AFj" id="taO-TE-bgw"/>
                         <outlet property="contentPassedDaysLabel" destination="c7u-Uo-ATt" id="BO9-TT-004"/>
-                        <outlet property="contentTitleTextField" destination="Ugx-X6-8Qs" id="YbK-6H-6Pt"/>
+                        <outlet property="contentTitleLabel" destination="ie3-vP-mj9" id="V7G-48-fEq"/>
                         <outlet property="limitDateLabel" destination="sdh-m4-LAb" id="4e0-Yy-eh4"/>
                         <outlet property="untilLimitDateLabel" destination="UGQ-h9-pln" id="y7V-e9-bLY"/>
                     </connections>

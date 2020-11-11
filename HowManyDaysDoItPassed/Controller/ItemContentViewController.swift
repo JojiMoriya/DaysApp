@@ -10,7 +10,7 @@ import RealmSwift
 
 class ItemContentViewController: UIViewController {
 
-    @IBOutlet weak var contentTitleTextField: UITextField!
+    @IBOutlet weak var contentTitleLabel: UILabel!
     @IBOutlet weak var contentPassedDaysLabel: UILabel!
     @IBOutlet weak var contentMemoTextView: UITextView!
     @IBOutlet weak var contentLaunchDateLabel: UILabel!
@@ -30,7 +30,7 @@ class ItemContentViewController: UIViewController {
         contentMemoTextView.layer.cornerRadius = 20
         contentMemoTextView.backgroundColor = UIColor.systemGray6
         
-        contentTitleTextField.text = itemList[contentItemIndexPath].itemTitle
+        contentTitleLabel.text = itemList[contentItemIndexPath].itemTitle
         contentPassedDaysLabel.text = calcInterval(date: itemList[contentItemIndexPath].launchDate)
         contentMemoTextView.text = itemList[contentItemIndexPath].itemMemo
         contentLaunchDateLabel.text = dateFormat(date: itemList[contentItemIndexPath].launchDate)
