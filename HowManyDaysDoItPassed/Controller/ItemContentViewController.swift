@@ -8,31 +8,40 @@
 import UIKit
 import RealmSwift
 
-class itemContentViewController: UIViewController {
+class ItemContentViewController: UIViewController {
 
     @IBOutlet weak var contentTitleTextField: UITextField!
     @IBOutlet weak var contentPassedDaysLabel: UILabel!
     @IBOutlet weak var contentMemoTextView: UITextView!
     @IBOutlet weak var contentLaunchDateLabel: UILabel!
+    @IBOutlet weak var limitDateLabel: UILabel!
+    @IBOutlet weak var untilLimitDateLabel: UILabel!
     
     private let realm = try! Realm()
     private var itemList: Results<ItemData>!
     
     var contentItemIndexPath = 0
+    var limitDateString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setRealm()
         
-        contentMemoTextView.layer.borderColor = UIColor.lightGray.cgColor
-        contentMemoTextView.layer.borderWidth = 2.0
-        contentMemoTextView.layer.cornerRadius = 5.0
-        contentMemoTextView.layer.masksToBounds = true
+        contentMemoTextView.layer.cornerRadius = 20
+        contentMemoTextView.backgroundColor = UIColor.systemGray6
         
         contentTitleTextField.text = itemList[contentItemIndexPath].itemTitle
         contentPassedDaysLabel.text = calcInterval(date: itemList[contentItemIndexPath].launchDate)
         contentMemoTextView.text = itemList[contentItemIndexPath].itemMemo
         contentLaunchDateLabel.text = dateFormat(date: itemList[contentItemIndexPath].launchDate)
+//        limitDateLabel.text = dateFormat(date: itemList[contentItemIndexPath].limitDate)
+        setLimitLabel()
+        limitDateLabel.text = limitDateString
+        if itemList[contentItemIndexPath].limitDate != itemList[contentItemIndexPath].launchDate {
+            untilLimitDateLabel.text = calcUntilDateInterval(date: itemList[contentItemIndexPath].limitDate)
+        } else {
+            untilLimitDateLabel.text = "期限なし"
+        }
     }
     
     private func setRealm() {
@@ -48,6 +57,14 @@ class itemContentViewController: UIViewController {
         return dayInterval
     }
     
+    func calcUntilDateInterval(date:Date) -> String {
+        let date1 = Date()
+        let date2 = itemList[contentItemIndexPath].limitDate
+        let elapsedDays = Calendar.current.dateComponents([.day], from: date1, to: date2).day!
+        let dayInterval = String(format: "あと%d日", elapsedDays )
+        return dayInterval
+    }
+    
     func dateFormat(date: Date) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") as Locale
@@ -55,15 +72,13 @@ class itemContentViewController: UIViewController {
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func setLimitLabel() {
+        if itemList[contentItemIndexPath].launchDate == itemList[contentItemIndexPath].limitDate {
+            limitDateString = "期限なし"
+        } else {
+            limitDateString = dateFormat(date: itemList[contentItemIndexPath].limitDate)
+        }
     }
-    */
 
 }
