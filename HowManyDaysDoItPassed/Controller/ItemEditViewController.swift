@@ -9,21 +9,31 @@ import UIKit
 
 class ItemEditViewController: UIViewController {
 
+    @IBOutlet weak var editItemTitleTextFiled: UITextField!
+    @IBOutlet weak var editItemLaunchDateTextFiled: UITextField!
+    @IBOutlet weak var editItemLimitDateTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        makeLaunchDatePicker()
+        makeLimitDatePicker()
 
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func makeLaunchDatePicker() {
+        let launchDatePicker = UIDatePicker()
+        launchDatePicker.datePickerMode = .date
+        launchDatePicker.locale = NSLocale(localeIdentifier: "ja_JP") as Locale
+        launchDatePicker.preferredDatePickerStyle = .wheels
+        editItemLaunchDateTextFiled.inputView = launchDatePicker
     }
-    */
-
+    
+    func makeLimitDatePicker() {
+        let limitDatePicker = UIDatePicker()
+        limitDatePicker.datePickerMode = .date
+        limitDatePicker.locale = NSLocale(localeIdentifier: "ja_JP") as Locale
+        limitDatePicker.preferredDatePickerStyle = .wheels
+        editItemLimitDateTextField.inputView = limitDatePicker
+    }
 }

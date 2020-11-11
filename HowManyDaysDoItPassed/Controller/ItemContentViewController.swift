@@ -81,4 +81,9 @@ class ItemContentViewController: UIViewController {
         }
     }
 
+//    @IBAction func goToEditVC(_ sender: UIBarButtonItem) {
+//        let itemEditVC = storyboard?.instantiateViewController(identifier: "ItemEditVC")
+//        self.present(itemEditVC!, animated: true, completion: nil)
+//        
+//    }
 }
