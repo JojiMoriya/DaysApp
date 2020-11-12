@@ -81,9 +81,14 @@ class ItemContentViewController: UIViewController {
         }
     }
 
-//    @IBAction func goToEditVC(_ sender: UIBarButtonItem) {
-//        let itemEditVC = storyboard?.instantiateViewController(identifier: "ItemEditVC")
-//        self.present(itemEditVC!, animated: true, completion: nil)
-//        
-//    }
+    @IBAction func buttonPressedToEditVC(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "goToEditVC", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToEditVC" {
+            let itemEditVC =  segue.destination as! ItemEditViewController
+            itemEditVC.editItemIndexPath = contentItemIndexPath
+        }
+    }
 }

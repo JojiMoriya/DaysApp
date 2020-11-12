@@ -263,7 +263,7 @@
                     <navigationItem key="navigationItem" id="dLB-ZI-kQD">
                         <barButtonItem key="rightBarButtonItem" title="編集" id="N7u-QW-5ct">
                             <connections>
-                                <segue destination="OKy-Zc-00e" kind="show" id="VkX-Qk-iTC"/>
+                                <action selector="buttonPressedToEditVC:" destination="5yc-8x-j0U" id="PXp-is-EaQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -274,6 +274,7 @@
                         <outlet property="contentTitleLabel" destination="ie3-vP-mj9" id="V7G-48-fEq"/>
                         <outlet property="limitDateLabel" destination="sdh-m4-LAb" id="4e0-Yy-eh4"/>
                         <outlet property="untilLimitDateLabel" destination="UGQ-h9-pln" id="y7V-e9-bLY"/>
+                        <segue destination="OKy-Zc-00e" kind="show" identifier="goToEditVC" id="qUP-ak-5vn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xdP-Xt-K4m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
