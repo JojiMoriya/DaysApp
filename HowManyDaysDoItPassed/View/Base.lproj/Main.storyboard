@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--あれから何日？-->
+        <!--ホーム-->
         <scene sceneID="0vI-NP-4OC">
             <objects>
                 <tableViewController id="bGp-mk-wfD" customClass="ItemListTableViewController" customModule="HowManyDaysDoItPassed" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,7 +52,7 @@
                             <outlet property="delegate" destination="bGp-mk-wfD" id="2tu-Yk-Sn0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="あれから何日？" id="cfz-uG-FBk">
+                    <navigationItem key="navigationItem" title="ホーム" id="cfz-uG-FBk">
                         <barButtonItem key="rightBarButtonItem" title="追加" id="Ypj-Ua-GBX">
                             <connections>
                                 <segue destination="RAP-qR-KQD" kind="presentation" id="0Za-uZ-9cn"/>
@@ -163,7 +163,7 @@
             </objects>
             <point key="canvasLocation" x="1679.7101449275362" y="-263.16964285714283"/>
         </scene>
-        <!--Item Content View Controller-->
+        <!--詳細-->
         <scene sceneID="6Wj-Rx-kac">
             <objects>
                 <viewController storyboardIdentifier="ItemContentVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5yc-8x-j0U" customClass="ItemContentViewController" customModule="HowManyDaysDoItPassed" customModuleProvider="target" sceneMemberID="viewController">
@@ -260,7 +260,7 @@
                         <viewLayoutGuide key="safeArea" id="XiY-VP-iM4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="dLB-ZI-kQD">
+                    <navigationItem key="navigationItem" title="詳細" id="dLB-ZI-kQD">
                         <barButtonItem key="rightBarButtonItem" title="編集" id="N7u-QW-5ct">
                             <connections>
                                 <action selector="buttonPressedToEditVC:" destination="5yc-8x-j0U" id="PXp-is-EaQ"/>
@@ -281,7 +281,7 @@
             </objects>
             <point key="canvasLocation" x="1679.7101449275362" y="412.5"/>
         </scene>
-        <!--Item Edit View Controller-->
+        <!--編集-->
         <scene sceneID="OAT-4d-o0w">
             <objects>
                 <viewController storyboardIdentifier="ItemEditVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OKy-Zc-00e" customClass="ItemEditViewController" customModule="HowManyDaysDoItPassed" customModuleProvider="target" sceneMemberID="viewController">
@@ -363,7 +363,7 @@
                         <viewLayoutGuide key="safeArea" id="Zhe-o9-cfV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="9hs-f8-WEn"/>
+                    <navigationItem key="navigationItem" title="編集" id="9hs-f8-WEn"/>
                     <connections>
                         <outlet property="checkBoxButton" destination="Say-1V-P53" id="dC3-Ah-Upl"/>
                         <outlet property="editItemLaunchDateTextFiled" destination="etb-kR-RCh" id="y6O-nE-AxO"/>
