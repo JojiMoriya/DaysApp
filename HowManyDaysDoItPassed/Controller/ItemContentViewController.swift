@@ -41,6 +41,8 @@ class ItemContentViewController: UIViewController {
         } else {
             untilLimitDateLabel.text = "期限なし"
         }
+        
+        contentMemoTextView.isEditable = false
     }
     
     private func setRealm() {
