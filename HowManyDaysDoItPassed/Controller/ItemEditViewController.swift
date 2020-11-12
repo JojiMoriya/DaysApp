@@ -74,8 +74,10 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        editItemTitleTextFiled.endEditing(true)
         editItemLaunchDateTextFiled.endEditing(true)
         editItemLimitDateTextField.endEditing(true)
+        editItemTextView.endEditing(true)
     }
     
     //pickerが選択時デリゲートメソッド

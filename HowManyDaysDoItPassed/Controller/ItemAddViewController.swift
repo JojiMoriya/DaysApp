@@ -131,8 +131,10 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
     
     //入力領域を引っ込める
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        itemTitleTextField.endEditing(true)
         ATextField.endEditing(true)
         BTextField.endEditing(true)
+        itemMemoTextView.endEditing(true)
     }
     
     //pickerが選択時デリゲートメソッド
@@ -162,8 +164,6 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-
-    
     @IBAction func addButtonPressed(_ sender: UIButton) {
         itemTitle = itemTitleTextField.text ?? ""
         itemMemo = itemMemoTextView.text
@@ -175,9 +175,5 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
             limitDate = AselectedDate
         }
     }
-    
-    
-    
-    
     
 }
