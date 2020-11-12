@@ -34,7 +34,6 @@ class ItemContentViewController: UIViewController {
         contentPassedDaysLabel.text = calcInterval(date: itemList[contentItemIndexPath].launchDate)
         contentMemoTextView.text = itemList[contentItemIndexPath].itemMemo
         contentLaunchDateLabel.text = dateFormat(date: itemList[contentItemIndexPath].launchDate)
-//        limitDateLabel.text = dateFormat(date: itemList[contentItemIndexPath].limitDate)
         setLimitLabel()
         limitDateLabel.text = limitDateString
         if itemList[contentItemIndexPath].limitDate != itemList[contentItemIndexPath].launchDate {
@@ -68,7 +67,7 @@ class ItemContentViewController: UIViewController {
     func dateFormat(date: Date) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") as Locale
-        dateFormatter.dateFormat = "yyyy/MM/dd"
+        dateFormatter.dateFormat = "yyyy年MM月dd日"
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
@@ -90,5 +89,21 @@ class ItemContentViewController: UIViewController {
             let itemEditVC =  segue.destination as! ItemEditViewController
             itemEditVC.editItemIndexPath = contentItemIndexPath
         }
+    }
+    
+    private func editRealm(itemTitle: String, launchDate: Date, limitDate: Date, itemMemo: String) {
+        try! realm.write {
+            itemList[contentItemIndexPath].itemTitle = itemTitle
+            itemList[contentItemIndexPath].launchDate = launchDate
+            itemList[contentItemIndexPath].limitDate = limitDate
+            itemList[contentItemIndexPath].itemMemo = itemMemo
+        }
+    }
+    
+    @IBAction func unwindFromEditVC(_ unwindSegue: UIStoryboardSegue) {
+        guard unwindSegue.identifier == "unwindFromEditVC" else { return }
+        let itemEditVC = unwindSegue.source as! ItemEditViewController
+        editRealm(itemTitle: itemEditVC.editedItemTitle, launchDate: itemEditVC.editedLaunchDate, limitDate: itemEditVC.editedLimitDate, itemMemo: itemEditVC.editedItemMemo)
+        self.viewDidLoad()
     }
 }

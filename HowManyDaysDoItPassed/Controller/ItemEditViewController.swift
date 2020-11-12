@@ -13,10 +13,17 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var editItemTitleTextFiled: UITextField!
     @IBOutlet weak var editItemLaunchDateTextFiled: UITextField!
     @IBOutlet weak var editItemLimitDateTextField: UITextField!
+    @IBOutlet weak var editItemTextView: UITextView!
+    @IBOutlet weak var checkBoxButton: UIButton!
     var APicker: UIDatePicker!
     var BPicker: UIDatePicker!
     var AselectedDate: Date!
     var BselectedDate: Date!
+    
+    var editedItemTitle = ""
+    var editedLaunchDate = Date()
+    var editedLimitDate = Date()
+    var editedItemMemo = ""
     
     private let realm = try! Realm()
     private var itemList: Results<ItemData>!
@@ -33,7 +40,10 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         
         editItemTitleTextFiled.text = itemList[editItemIndexPath].itemTitle
         editItemLaunchDateTextFiled.text = dateFormat(date: itemList[editItemIndexPath].launchDate)
+        AselectedDate = itemList[editItemIndexPath].launchDate
         editItemLimitDateTextField.text = setLimitDate()
+        BselectedDate = itemList[editItemIndexPath].limitDate
+        editItemTextView.text = itemList[editItemIndexPath].itemMemo
 
     }
     
@@ -78,9 +88,11 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         if sender.tag == 1 {
             editItemLaunchDateTextFiled.text = mySelectedDate as String
             AselectedDate = sender.date
+            print(AselectedDate!)
         } else {
             editItemLimitDateTextField.text = mySelectedDate as String
             BselectedDate = sender.date
+            print(BselectedDate!)
         }
         
         //ピッカー制約の更新
@@ -91,8 +103,10 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
     
     func setLimitDate() -> String{
         if itemList[editItemIndexPath].launchDate == itemList[editItemIndexPath].limitDate {
+            isChecked = false
             return ""
         } else {
+            isChecked = true 
             return dateFormat(date: itemList[editItemIndexPath].limitDate)
         }
     }
@@ -104,4 +118,35 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
+    
+    let checkedImage = UIImage(named: "checkOn")! as UIImage
+    let uncheckedImage = UIImage(named: "checkOff")! as UIImage
+    
+    var isChecked: Bool = true {
+        didSet{
+            if isChecked == true {
+                checkBoxButton.setImage(checkedImage, for: UIControl.State.normal)
+            } else {
+                checkBoxButton.setImage(uncheckedImage, for: UIControl.State.normal)
+            }
+        }
+    }
+    
+    @IBAction func checkBoxButtonClicked(_ sender: UIButton) {
+        isChecked = !isChecked
+    }
+    
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        editedItemTitle = editItemTitleTextFiled.text ?? ""
+        editedLaunchDate = AselectedDate
+        if isChecked == true {
+            editedLimitDate = BselectedDate
+        } else {
+            editedLimitDate = AselectedDate
+        }
+        editedItemMemo = editItemTextView.text
+        
+        performSegue(withIdentifier: "unwindFromEditVC", sender: nil)
+    }
+    
 }
