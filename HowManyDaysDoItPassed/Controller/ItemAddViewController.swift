@@ -14,6 +14,8 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var firstView: UIView!
     @IBOutlet weak var secondView: UIView!
     @IBOutlet weak var checkBoxButton: UIButton!
+    @IBOutlet weak var notificationSwitch: UISwitch!
+    @IBOutlet weak var notificationDayTextFiled: UITextField!
     
     var itemTitle = ""
     var launchDate = Date()
@@ -30,6 +32,9 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
     private var BPicker: UIDatePicker!
     private var BTextField = UITextField()
     
+    var pickerView: UIPickerView = UIPickerView()
+    let list = ["1", "2", "3", "4", "5", "6", "7"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,6 +46,10 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         makePickerBaseView(false)
          
         isChecked = true
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        notificationDayTextFiled.inputView = pickerView
     }
     
 //MARK: - CheckBoxの実装
@@ -135,6 +144,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         ATextField.endEditing(true)
         BTextField.endEditing(true)
         itemMemoTextView.endEditing(true)
+        notificationDayTextFiled.endEditing(true)
     }
     
     //pickerが選択時デリゲートメソッド
@@ -175,5 +185,26 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
             limitDate = AselectedDate
         }
     }
+    
+}
+
+extension ItemAddViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        list.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return list[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.notificationDayTextFiled.text = list[row]
+    }
+    
     
 }
