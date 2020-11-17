@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ItemAddViewController: UIViewController, UITextFieldDelegate {
+class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotificationCenterDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var itemTitleTextField: UITextField!
     @IBOutlet weak var itemMemoTextView: UITextView!
     @IBOutlet weak var firstView: UIView!
@@ -50,6 +50,8 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         pickerView.delegate = self
         pickerView.dataSource = self
         notificationDayTextFiled.inputView = pickerView
+        notificationSwitch.isOn = false
+        notificationDayTextFiled.text = list[0]
     }
     
 //MARK: - CheckBoxの実装
@@ -173,6 +175,39 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+
+    
+    func setNotification() {
+        let untilDay = notificationDayTextFiled.text
+        let day = Int(untilDay!)! * -1
+        let limitday = BPicker.date
+        let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
+        print(notificationDay)
+        if notificationDay <= Date() {
+            
+        }
+        var dateComponents = Calendar.current.dateComponents([.calendar, .year, .month, .day], from: notificationDay)
+        dateComponents.hour = 18
+        dateComponents.minute = 42
+        print(dateComponents)
+        
+        let content = UNMutableNotificationContent()
+        content.sound = UNNotificationSound.default
+        content.title = "もうすぐ期限日です"
+        content.body = "「\(itemTitle)」の期限日まであと\(untilDay!)日です"
+        // ローカル通知リクエストを作成
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        // ユニークなIDを作る
+        let identifier = NSUUID().uuidString
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        // ローカル通知リクエストを登録
+        UNUserNotificationCenter.current().add(request){ (error : Error?) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
         itemTitle = itemTitleTextField.text ?? ""
@@ -184,8 +219,45 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate {
         } else {
             limitDate = AselectedDate
         }
+        
+        if notificationSwitch.isOn == true {
+            setNotification()
+        }
+        
     }
     
+    @IBAction func test(_ sender: UIButton) {
+        print("<Pending request identifiers>")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeStyle = .short
+        dateFormatter.dateStyle = .short
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        
+        let center = UNUserNotificationCenter.current()
+        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+            for request in requests {
+                print("identifier:\(request.identifier)")
+                print("  title:\(request.content.title)")
+                
+                if request.trigger is UNCalendarNotificationTrigger {
+                    let trigger = request.trigger as! UNCalendarNotificationTrigger
+                    print("  <CalendarNotification>")
+                    let components = DateComponents(calendar: Calendar.current, year: trigger.dateComponents.year, month: trigger.dateComponents.month, day: trigger.dateComponents.day, hour: trigger.dateComponents.hour, minute: trigger.dateComponents.minute)
+                    print("    Scheduled Date:\(dateFormatter.string(from: components.date!))")
+                    print("    Reperts:\(trigger.repeats)")
+                    
+                } else if request.trigger is UNTimeIntervalNotificationTrigger {
+                    let trigger = request.trigger as! UNTimeIntervalNotificationTrigger
+                    print("  <TimeIntervalNotification>")
+                    print("    TimeInterval:\(trigger.timeInterval)")
+                    print("    Reperts:\(trigger.repeats)")
+                }
+                print("----------------")
+            }
+        }
+    }
 }
 
 extension ItemAddViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
