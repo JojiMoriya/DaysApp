@@ -14,7 +14,8 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var editItemLaunchDateTextFiled: UITextField!
     @IBOutlet weak var editItemLimitDateTextField: UITextField!
     @IBOutlet weak var editItemTextView: UITextView!
-    @IBOutlet weak var checkBoxButton: UIButton!
+    @IBOutlet weak var limitDateSwitch: UISwitch!
+   
     var APicker: UIDatePicker!
     var BPicker: UIDatePicker!
     var AselectedDate: Date!
@@ -37,6 +38,9 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         
         makeLaunchDatePicker()
         makeLimitDatePicker()
+        
+        editItemTextView.layer.cornerRadius = 20
+        editItemTextView.backgroundColor = UIColor.systemGray6
         
         editItemTitleTextFiled.text = itemList[editItemIndexPath].itemTitle
         editItemLaunchDateTextFiled.text = dateFormat(date: itemList[editItemIndexPath].launchDate)
@@ -105,10 +109,10 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
     
     func setLimitDate() -> String{
         if itemList[editItemIndexPath].launchDate == itemList[editItemIndexPath].limitDate {
-            isChecked = false
+            limitDateSwitch.isOn = false
             return ""
         } else {
-            isChecked = true 
+            limitDateSwitch.isOn = true 
             return dateFormat(date: itemList[editItemIndexPath].limitDate)
         }
     }
@@ -121,27 +125,11 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         return dateString
     }
     
-    let checkedImage = UIImage(named: "checkOn")! as UIImage
-    let uncheckedImage = UIImage(named: "checkOff")! as UIImage
-    
-    var isChecked: Bool = true {
-        didSet{
-            if isChecked == true {
-                checkBoxButton.setImage(checkedImage, for: UIControl.State.normal)
-            } else {
-                checkBoxButton.setImage(uncheckedImage, for: UIControl.State.normal)
-            }
-        }
-    }
-    
-    @IBAction func checkBoxButtonClicked(_ sender: UIButton) {
-        isChecked = !isChecked
-    }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         editedItemTitle = editItemTitleTextFiled.text ?? ""
         editedLaunchDate = AselectedDate
-        if isChecked == true {
+        if limitDateSwitch.isOn == true {
             editedLimitDate = BselectedDate
         } else {
             editedLimitDate = AselectedDate

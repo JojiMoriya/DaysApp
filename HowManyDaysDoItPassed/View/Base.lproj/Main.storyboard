@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fRY-a4-Gq7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fRY-a4-Gq7">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -115,15 +115,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AzI-yY-QzN">
-                                <rect key="frame" x="115" y="260" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="buttonClicked:" destination="YNH-t8-n5p" eventType="touchUpInside" id="Wj8-YX-aEL"/>
-                                    <action selector="checkBoxButtonClicked:" destination="RAP-qR-KQD" eventType="touchUpInside" id="sFD-3r-Irg"/>
-                                </connections>
-                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YBC-qc-Msy">
                                 <rect key="frame" x="169" y="453" width="230" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -181,16 +172,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YR5-2K-Kgh">
+                                <rect key="frame" x="122" y="260" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4QZ-5D-50n"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
                         <outlet property="addButton" destination="vve-eJ-Kw6" id="UnE-AB-5gc"/>
-                        <outlet property="checkBoxButton" destination="AzI-yY-QzN" id="2sd-lC-vgR"/>
                         <outlet property="firstView" destination="ZYR-NX-UHg" id="grP-I5-qPe"/>
                         <outlet property="itemMemoTextView" destination="YBC-qc-Msy" id="mGX-Yo-spV"/>
                         <outlet property="itemTitleTextField" destination="OfT-A2-zzp" id="5Co-Sw-qjT"/>
+                        <outlet property="limitDateSwitch" destination="YR5-2K-Kgh" id="G2I-4b-AZs"/>
                         <outlet property="notificationDayTextFiled" destination="qKB-2h-QUc" id="1Uy-tq-4Wa"/>
                         <outlet property="notificationSwitch" destination="Iy2-MK-zlL" id="LKG-hh-3vP"/>
                         <outlet property="secondView" destination="JgY-Pt-moE" id="M2p-On-gBZ"/>
@@ -366,14 +361,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Say-1V-P53">
-                                <rect key="frame" x="103" y="229" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="checkBoxButtonClicked:" destination="OKy-Zc-00e" eventType="touchUpInside" id="E1E-5z-zaB"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l4v-x4-hVd">
                                 <rect key="frame" x="192" y="506" width="31" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -397,17 +384,21 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ecw-Io-A1n">
+                                <rect key="frame" x="99" y="229" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Zhe-o9-cfV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="編集" id="9hs-f8-WEn"/>
                     <connections>
-                        <outlet property="checkBoxButton" destination="Say-1V-P53" id="dC3-Ah-Upl"/>
                         <outlet property="editItemLaunchDateTextFiled" destination="etb-kR-RCh" id="y6O-nE-AxO"/>
                         <outlet property="editItemLimitDateTextField" destination="wQl-VH-ibz" id="f7N-Y3-QnY"/>
                         <outlet property="editItemTextView" destination="94D-rs-eFZ" id="kKF-NZ-ova"/>
                         <outlet property="editItemTitleTextFiled" destination="TRL-W4-MTR" id="JHw-Yq-esA"/>
+                        <outlet property="limitDateSwitch" destination="ecw-Io-A1n" id="iPz-N0-TsL"/>
                         <segue destination="YXa-TH-pcZ" kind="unwind" identifier="unwindFromEditVC" unwindAction="unwindFromEditVC:" id="QJU-t7-M4z"/>
                     </connections>
                 </viewController>

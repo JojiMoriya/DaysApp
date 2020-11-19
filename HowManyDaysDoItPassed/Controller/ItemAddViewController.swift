@@ -13,7 +13,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     @IBOutlet weak var itemMemoTextView: UITextView!
     @IBOutlet weak var firstView: UIView!
     @IBOutlet weak var secondView: UIView!
-    @IBOutlet weak var checkBoxButton: UIButton!
+    @IBOutlet weak var limitDateSwitch: UISwitch!
     @IBOutlet weak var notificationSwitch: UISwitch!
     @IBOutlet weak var notificationDayTextFiled: UITextField!
     @IBOutlet weak var addButton: UIButton!
@@ -46,8 +46,6 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         makePickerBaseView(true)
         makePickerBaseView(false)
         
-        isChecked = true
-        
         itemTitleTextField.delegate = self
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -56,24 +54,6 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         notificationDayTextFiled.text = list[0]
         
         addButton.isEnabled = false
-    }
-    
-    //MARK: - CheckBoxの実装
-    let checkedImage = UIImage(named: "checkOn")! as UIImage
-    let uncheckedImage = UIImage(named: "checkOff")! as UIImage
-    
-    var isChecked: Bool = true {
-        didSet{
-            if isChecked == true {
-                checkBoxButton.setImage(checkedImage, for: UIControl.State.normal)
-            } else {
-                checkBoxButton.setImage(uncheckedImage, for: UIControl.State.normal)
-            }
-        }
-    }
-    
-    @IBAction func checkBoxButtonClicked(_ sender: UIButton) {
-        isChecked = !isChecked
     }
     
     //MARK: - DatePickerの実装
@@ -233,7 +213,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         itemMemo = itemMemoTextView.text
         launchDate = AselectedDate
         
-        if isChecked == true {
+        if limitDateSwitch.isOn == true {
             limitDate = BselectedDate
         } else {
             limitDate = AselectedDate
