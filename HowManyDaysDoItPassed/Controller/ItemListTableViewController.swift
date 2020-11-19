@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import NotificationCenter
 
 class ItemListTableViewController: UITableViewController {
     @IBOutlet private var itemListTableView: UITableView!
@@ -19,9 +20,38 @@ class ItemListTableViewController: UITableViewController {
         super.viewDidLoad()
         itemListTableView.rowHeight = 70
         setRealm()
+        
         navigationItem.leftBarButtonItem = editButtonItem
         editButtonItem.title = "編集"
         print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true))
+        buttonPendingListTouchUpInside()
+    }
+    
+    func buttonPendingListTouchUpInside() {
+        print("<Pending request identifiers>")
+        
+        let center = UNUserNotificationCenter.current()
+        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+            for request in requests {
+                print("identifier:\(request.identifier)")
+                print("  title:\(request.content.title)")
+                
+                if request.trigger is UNCalendarNotificationTrigger {
+                    let trigger = request.trigger as! UNCalendarNotificationTrigger
+                    print("  <CalendarNotification>")
+                    let components = DateComponents(calendar: Calendar.current, year: trigger.dateComponents.year, month: trigger.dateComponents.month, day: trigger.dateComponents.day, hour: trigger.dateComponents.hour, minute: trigger.dateComponents.minute)
+//                    print("    Scheduled Date:\(self.dateFormatter.string(from: components.date!))")
+                    print("    Reperts:\(trigger.repeats)")
+                    
+                } else if request.trigger is UNTimeIntervalNotificationTrigger {
+                    let trigger = request.trigger as! UNTimeIntervalNotificationTrigger
+                    print("  <TimeIntervalNotification>")
+                    print("    TimeInterval:\(trigger.timeInterval)")
+                    print("    Reperts:\(trigger.repeats)")
+                }
+                print("----------------")
+            }
+        }
     }
     
     //Realmデータの全情報を取得する
@@ -29,12 +59,13 @@ class ItemListTableViewController: UITableViewController {
         itemList = realm.objects(ItemData.self)
     }
     
-    private func addRealm(itemTitle: String, launchDate: Date, limitDate: Date, itemMemo: String) {
+    private func addRealm(itemTitle: String, launchDate: Date, limitDate: Date, itemMemo: String, notificationID: String) {
         let addItem = ItemData()
         addItem.itemTitle = itemTitle
         addItem.launchDate = launchDate
         addItem.limitDate = limitDate
         addItem.itemMemo = itemMemo
+        addItem.notificationID = notificationID
         try! realm.write() {
             realm.add(addItem)
         }
@@ -43,7 +74,7 @@ class ItemListTableViewController: UITableViewController {
     @IBAction func addSegue(_ unwindSegue: UIStoryboardSegue) {
         guard unwindSegue.identifier == "addItemToItemListVC" else { return }
         let addItemVC = unwindSegue.source as! ItemAddViewController
-        addRealm(itemTitle: addItemVC.itemTitle, launchDate: addItemVC.launchDate, limitDate: addItemVC.limitDate, itemMemo: addItemVC.itemMemo)
+        addRealm(itemTitle: addItemVC.itemTitle, launchDate: addItemVC.launchDate, limitDate: addItemVC.limitDate, itemMemo: addItemVC.itemMemo, notificationID: addItemVC.notificationID)
         itemListTableView.reloadData()
     }
     
@@ -109,7 +140,7 @@ class ItemListTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toItemContentVC" {
-            let itemContentVC =  segue.destination as! itemContentViewController
+            let itemContentVC =  segue.destination as! ItemContentViewController
             itemContentVC.contentItemIndexPath = sender as! Int
         }
     }

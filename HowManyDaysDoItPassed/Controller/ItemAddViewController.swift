@@ -22,6 +22,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     var launchDate = Date()
     var limitDate = Date()
     var itemMemo = ""
+    var notificationID = ""
     
     private var nowDate:String!
     private var AselectedDate:Date!
@@ -189,6 +190,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         let identifier = NSUUID().uuidString
+        notificationID = identifier
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request){ (error : Error?) in
