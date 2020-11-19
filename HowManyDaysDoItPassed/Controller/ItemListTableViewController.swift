@@ -27,8 +27,14 @@ class ItemListTableViewController: UITableViewController {
         buttonPendingListTouchUpInside()
     }
     
+    //実行待ち通知を一覧するメソッド
     func buttonPendingListTouchUpInside() {
         print("<Pending request identifiers>")
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeStyle = .short
+        dateFormatter.dateStyle = .short
+        dateFormatter.locale = Locale(identifier: "ja_JP")
         
         let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
@@ -40,7 +46,7 @@ class ItemListTableViewController: UITableViewController {
                     let trigger = request.trigger as! UNCalendarNotificationTrigger
                     print("  <CalendarNotification>")
                     let components = DateComponents(calendar: Calendar.current, year: trigger.dateComponents.year, month: trigger.dateComponents.month, day: trigger.dateComponents.day, hour: trigger.dateComponents.hour, minute: trigger.dateComponents.minute)
-//                    print("    Scheduled Date:\(self.dateFormatter.string(from: components.date!))")
+                    print("    Scheduled Date:\(dateFormatter.string(from: components.date!))")
                     print("    Reperts:\(trigger.repeats)")
                     
                 } else if request.trigger is UNTimeIntervalNotificationTrigger {
@@ -115,6 +121,10 @@ class ItemListTableViewController: UITableViewController {
             // ボタンが押された時の処理を書く（クロージャ実装）
             (action: UIAlertAction!) -> Void in
             let deleteItem = self.itemList[indexPath.row]
+            //Realmデータをもとに削除するアイテムの通知を削除
+            if deleteItem.notificationID != "" {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [deleteItem.notificationID])
+            }
             try! self.realm.write {
                 self.realm.delete(deleteItem)
             }
