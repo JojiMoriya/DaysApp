@@ -55,6 +55,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         notificationDayTextFiled.text = list[0]
         
         addButton.isEnabled = false
+        addButton.layer.cornerRadius = 20
     }
     
     //MARK: - DatePickerの実装
