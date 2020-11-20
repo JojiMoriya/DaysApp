@@ -15,7 +15,10 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var editItemLimitDateTextField: UITextField!
     @IBOutlet weak var editItemTextView: UITextView!
     @IBOutlet weak var limitDateSwitch: UISwitch!
-   
+    @IBOutlet weak var notificationSwitch: UISwitch!
+    @IBOutlet weak var notificationDateTextFiled: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
+    
     var APicker: UIDatePicker!
     var BPicker: UIDatePicker!
     var AselectedDate: Date!
@@ -25,6 +28,12 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
     var editedLaunchDate = Date()
     var editedLimitDate = Date()
     var editedItemMemo = ""
+    
+    var notificationID = ""
+    var notificationDate = ""
+    
+    var pickerView: UIPickerView = UIPickerView()
+    let list = ["1", "2", "3", "4", "5", "6", "7"]
     
     private let realm = try! Realm()
     private var itemList: Results<ItemData>!
@@ -48,6 +57,10 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         editItemLimitDateTextField.text = setLimitDate()
         BselectedDate = itemList[editItemIndexPath].limitDate
         editItemTextView.text = itemList[editItemIndexPath].itemMemo
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        notificationDateTextFiled.inputView = pickerView
 
     }
     
@@ -117,6 +130,34 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func setNotification() {
+        let itemTitle = editItemTitleTextFiled.text
+        let untilDay = notificationDateTextFiled.text
+        let day = Int(untilDay!)! * -1
+        let limitday = BPicker.date
+        let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
+        
+        var dateComponents = Calendar.current.dateComponents([.calendar, .year, .month, .day], from: notificationDay)
+        dateComponents.hour = 12
+        dateComponents.minute = 0
+        
+        let content = UNMutableNotificationContent()
+        content.sound = UNNotificationSound.default
+        content.title = "もうすぐ期限日です"
+        content.body = "「\(itemTitle!)」の期限日まであと\(untilDay!)日です"
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let identifier = NSUUID().uuidString
+        notificationID = identifier
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request){ (error : Error?) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func dateFormat(date: Date) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") as Locale
@@ -138,5 +179,42 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         
         performSegue(withIdentifier: "unwindFromEditVC", sender: nil)
     }
+    
+    func alert (title: String, message: String) {
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+}
+
+extension ItemEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        list.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return list[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.notificationDateTextFiled.text = list[row]
+        let untilDay = notificationDateTextFiled.text
+        let day = Int(untilDay!)! * -1
+        let limitday = BPicker.date
+        let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
+        if notificationDay <= Date() {
+            alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
+            saveButton.isEnabled = false
+        } else {
+            saveButton.isEnabled = true
+        }
+    }
+    
     
 }
