@@ -59,6 +59,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         addButton.isEnabled = false
         addButton.layer.cornerRadius = 20
         addButton.setTitleColor(UIColor.systemGray4, for: .normal)
+        BPicker.minimumDate = APicker.date
     }
     
     //MARK: - DatePickerの実装
