@@ -107,7 +107,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YBC-qc-Msy">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YBC-qc-Msy">
                                 <rect key="frame" x="59" y="581" width="335" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -172,9 +172,7 @@
                                 <rect key="frame" x="174" y="739" width="66" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                <state key="normal" title="追加">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
+                                <state key="normal" title="追加"/>
                                 <connections>
                                     <action selector="addButtonPressed:" destination="RAP-qR-KQD" eventType="touchUpInside" id="UNy-nC-AlD"/>
                                     <segue destination="YNH-t8-n5p" kind="unwind" identifier="addItemToItemListVC" unwindAction="addSegue:" id="ZYZ-QD-cnM"/>

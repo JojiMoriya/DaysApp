@@ -40,6 +40,8 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        itemMemoTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        itemMemoTextView.layer.borderWidth = 1
         itemMemoTextView.layer.cornerRadius = 20
         itemMemoTextView.backgroundColor = UIColor.systemGray6
         
@@ -56,6 +58,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         
         addButton.isEnabled = false
         addButton.layer.cornerRadius = 20
+        addButton.setTitleColor(UIColor.systemGray4, for: .normal)
     }
     
     //MARK: - DatePickerの実装
@@ -204,8 +207,10 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     @IBAction func checkTitleIsNil(_ sender: UITextField) {
         if sender.text == "" {
             addButton.isEnabled = false
+            addButton.setTitleColor(UIColor.systemGray4, for: .normal)
         } else {
             addButton.isEnabled = true
+            addButton.setTitleColor(UIColor.black, for: .normal)
         }
     }
     
