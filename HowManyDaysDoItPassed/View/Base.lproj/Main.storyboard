@@ -286,19 +286,19 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="通知日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-Y7-OzE">
                                 <rect key="frame" x="20" y="369" width="87" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpC-Z6-gAs">
-                                <rect key="frame" x="197" y="369" width="42" height="21"/>
+                                <rect key="frame" x="197" y="369" width="163" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2aB-tR-AFj">
-                                <rect key="frame" x="117" y="512" width="181" height="128"/>
+                                <rect key="frame" x="101" y="481" width="181" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -322,6 +322,7 @@
                         <outlet property="contentPassedDaysLabel" destination="c7u-Uo-ATt" id="BO9-TT-004"/>
                         <outlet property="contentTitleLabel" destination="ie3-vP-mj9" id="V7G-48-fEq"/>
                         <outlet property="limitDateLabel" destination="sdh-m4-LAb" id="4e0-Yy-eh4"/>
+                        <outlet property="notificationDateLabel" destination="dpC-Z6-gAs" id="l4K-PY-jDf"/>
                         <outlet property="untilLimitDateLabel" destination="UGQ-h9-pln" id="y7V-e9-bLY"/>
                         <segue destination="OKy-Zc-00e" kind="show" identifier="goToEditVC" id="qUP-ak-5vn"/>
                     </connections>

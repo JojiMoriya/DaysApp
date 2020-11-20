@@ -65,13 +65,14 @@ class ItemListTableViewController: UITableViewController {
         itemList = realm.objects(ItemData.self)
     }
     
-    private func addRealm(itemTitle: String, launchDate: Date, limitDate: Date, itemMemo: String, notificationID: String) {
+    private func addRealm(itemTitle: String, launchDate: Date, limitDate: Date, itemMemo: String, notificationID: String, notificationDate: String) {
         let addItem = ItemData()
         addItem.itemTitle = itemTitle
         addItem.launchDate = launchDate
         addItem.limitDate = limitDate
         addItem.itemMemo = itemMemo
         addItem.notificationID = notificationID
+        addItem.notificationDate = notificationDate
         try! realm.write() {
             realm.add(addItem)
         }
@@ -80,7 +81,7 @@ class ItemListTableViewController: UITableViewController {
     @IBAction func addSegue(_ unwindSegue: UIStoryboardSegue) {
         guard unwindSegue.identifier == "addItemToItemListVC" else { return }
         let addItemVC = unwindSegue.source as! ItemAddViewController
-        addRealm(itemTitle: addItemVC.itemTitle, launchDate: addItemVC.launchDate, limitDate: addItemVC.limitDate, itemMemo: addItemVC.itemMemo, notificationID: addItemVC.notificationID)
+        addRealm(itemTitle: addItemVC.itemTitle, launchDate: addItemVC.launchDate, limitDate: addItemVC.limitDate, itemMemo: addItemVC.itemMemo, notificationID: addItemVC.notificationID, notificationDate: addItemVC.notificationDate)
         itemListTableView.reloadData()
     }
     

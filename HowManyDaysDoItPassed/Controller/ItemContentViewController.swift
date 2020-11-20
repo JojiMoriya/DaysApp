@@ -16,6 +16,7 @@ class ItemContentViewController: UIViewController {
     @IBOutlet weak var contentLaunchDateLabel: UILabel!
     @IBOutlet weak var limitDateLabel: UILabel!
     @IBOutlet weak var untilLimitDateLabel: UILabel!
+    @IBOutlet weak var notificationDateLabel: UILabel!
     
     private let realm = try! Realm()
     private var itemList: Results<ItemData>!
@@ -41,6 +42,8 @@ class ItemContentViewController: UIViewController {
         } else {
             untilLimitDateLabel.text = "期限なし"
         }
+        
+        setNotificationDateLabel()
         
         contentMemoTextView.isEditable = false
     }
@@ -80,6 +83,15 @@ class ItemContentViewController: UIViewController {
         } else {
             limitDateString = dateFormat(date: itemList[contentItemIndexPath].limitDate)
         }
+    }
+    
+    func setNotificationDateLabel() {
+        if itemList[contentItemIndexPath].notificationDate != "" {
+            notificationDateLabel.text = "期限日の \(itemList[contentItemIndexPath].notificationDate) 日前"
+        } else {
+            notificationDateLabel.text = "通知設定なし"
+        }
+    
     }
 
     @IBAction func buttonPressedToEditVC(_ sender: UIBarButtonItem) {

@@ -23,6 +23,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     var limitDate = Date()
     var itemMemo = ""
     var notificationID = ""
+    var notificationDate = ""
     
     private var nowDate:String!
     private var AselectedDate:Date!
@@ -229,6 +230,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         }
         
         if notificationSwitch.isOn == true {
+            notificationDate = notificationDayTextFiled.text ?? ""
             setNotification()
         }
     }

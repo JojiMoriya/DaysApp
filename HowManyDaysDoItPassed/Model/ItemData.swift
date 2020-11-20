@@ -13,4 +13,5 @@ class ItemData: Object {
     @objc dynamic var limitDate = Date()
     @objc dynamic var itemMemo = ""
     @objc dynamic var notificationID = ""
+    @objc dynamic var notificationDate = ""
 }
