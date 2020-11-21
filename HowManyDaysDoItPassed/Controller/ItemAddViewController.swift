@@ -216,8 +216,6 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         }
     }
     
-    
-    
     @IBAction func addButtonPressed(_ sender: UIButton) {
         itemTitle = itemTitleTextField.text!
         itemMemo = itemMemoTextView.text
@@ -229,7 +227,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
             limitDate = AselectedDate
         }
         
-        if notificationSwitch.isOn == true {
+        if notificationSwitch.isOn == true && limitDateSwitch.isOn == true {
             notificationDate = notificationDayTextFiled.text ?? ""
             setNotification()
         }

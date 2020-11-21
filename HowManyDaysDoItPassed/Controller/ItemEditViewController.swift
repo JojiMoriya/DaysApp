@@ -204,7 +204,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [itemList[editItemIndexPath].notificationID])
         }
         
-        if notificationSwitch.isOn == true {
+        if notificationSwitch.isOn == true && limitDateSwitch.isOn == true{
             notificationDate = notificationDateTextFiled.text ?? ""
             setNotification()
         }
