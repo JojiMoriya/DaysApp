@@ -105,19 +105,21 @@ class ItemContentViewController: UIViewController {
         }
     }
     
-    private func editRealm(itemTitle: String, launchDate: Date, limitDate: Date, itemMemo: String) {
+    private func editRealm(itemTitle: String, launchDate: Date, limitDate: Date, itemMemo: String, notificationID: String, notificationDate: String) {
         try! realm.write {
             itemList[contentItemIndexPath].itemTitle = itemTitle
             itemList[contentItemIndexPath].launchDate = launchDate
             itemList[contentItemIndexPath].limitDate = limitDate
             itemList[contentItemIndexPath].itemMemo = itemMemo
+            itemList[contentItemIndexPath].notificationID = notificationID
+            itemList[contentItemIndexPath].notificationDate = notificationDate
         }
     }
     
     @IBAction func unwindFromEditVC(_ unwindSegue: UIStoryboardSegue) {
         guard unwindSegue.identifier == "unwindFromEditVC" else { return }
         let itemEditVC = unwindSegue.source as! ItemEditViewController
-        editRealm(itemTitle: itemEditVC.editedItemTitle, launchDate: itemEditVC.editedLaunchDate, limitDate: itemEditVC.editedLimitDate, itemMemo: itemEditVC.editedItemMemo)
+        editRealm(itemTitle: itemEditVC.editedItemTitle, launchDate: itemEditVC.editedLaunchDate, limitDate: itemEditVC.editedLimitDate, itemMemo: itemEditVC.editedItemMemo, notificationID: itemEditVC.notificationID, notificationDate: itemEditVC.notificationDate)
         self.viewDidLoad()
     }
 }

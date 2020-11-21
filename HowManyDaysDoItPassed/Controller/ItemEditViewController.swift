@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ItemEditViewController: UIViewController, UITextFieldDelegate {
+class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotificationCenterDelegate {
 
     @IBOutlet weak var editItemTitleTextFiled: UITextField!
     @IBOutlet weak var editItemLaunchDateTextFiled: UITextField!
@@ -95,6 +95,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         editItemLaunchDateTextFiled.endEditing(true)
         editItemLimitDateTextField.endEditing(true)
         editItemTextView.endEditing(true)
+        notificationDateTextFiled.endEditing(true)
     }
     
     //pickerが選択時デリゲートメソッド
@@ -131,7 +132,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setNotification() {
-        let itemTitle = editItemTitleTextFiled.text
+        let notificationTitle = editItemTitleTextFiled.text
         let untilDay = notificationDateTextFiled.text
         let day = Int(untilDay!)! * -1
         let limitday = BPicker.date
@@ -144,7 +145,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
         let content = UNMutableNotificationContent()
         content.sound = UNNotificationSound.default
         content.title = "もうすぐ期限日です"
-        content.body = "「\(itemTitle!)」の期限日まであと\(untilDay!)日です"
+        content.body = "「\(notificationTitle!)」の期限日まであと\(untilDay!)日です"
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         let identifier = NSUUID().uuidString
@@ -176,6 +177,15 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate {
             editedLimitDate = AselectedDate
         }
         editedItemMemo = editItemTextView.text
+        
+        if itemList[editItemIndexPath].notificationID != "" {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [itemList[editItemIndexPath].notificationID])
+        }
+        
+        if notificationSwitch.isOn == true {
+            notificationDate = notificationDateTextFiled.text ?? ""
+            setNotification()
+        }
         
         performSegue(withIdentifier: "unwindFromEditVC", sender: nil)
     }
