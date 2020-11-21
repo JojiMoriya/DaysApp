@@ -61,6 +61,8 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         pickerView.delegate = self
         pickerView.dataSource = self
         notificationDateTextFiled.inputView = pickerView
+        setlimitDatePicker()
+        setEditItemNotification()
 
     }
     
@@ -128,6 +130,26 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         } else {
             limitDateSwitch.isOn = true 
             return dateFormat(date: itemList[editItemIndexPath].limitDate)
+        }
+    }
+    
+    func setlimitDatePicker() {
+        if itemList[editItemIndexPath].limitDate != itemList[editItemIndexPath].launchDate {
+            BPicker.date = itemList[editItemIndexPath].limitDate
+        } else {
+            BPicker.date = Date()
+            BPicker.minimumDate = itemList[editItemIndexPath].launchDate
+        }
+    }
+    
+    func setEditItemNotification() {
+        if itemList[editItemIndexPath].notificationDate != "" {
+            notificationSwitch.isOn = true
+            notificationDateTextFiled.text = itemList[editItemIndexPath].notificationDate
+            let selectRow = Int(itemList[editItemIndexPath].notificationDate)! - 1
+            pickerView.selectRow(selectRow, inComponent: 0, animated: false)
+        } else {
+            notificationSwitch.isOn = false
         }
     }
     
