@@ -28,59 +28,47 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     private var nowDate:String!
     private var AselectedDate:Date!
     private var BselectedDate:Date!
-    
     private var APicker: UIDatePicker!
     private var ATextField = UITextField()
-    
     private var BPicker: UIDatePicker!
     private var BTextField = UITextField()
     
-    var pickerView: UIPickerView = UIPickerView()
-    let list = ["1", "2", "3", "4", "5", "6", "7"]
+    private var pickerView: UIPickerView = UIPickerView()
+    private let list = ["1", "2", "3", "4", "5", "6", "7"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        itemMemoTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        itemMemoTextView.layer.borderWidth = 1
-        itemMemoTextView.layer.cornerRadius = 20
-        itemMemoTextView.backgroundColor = UIColor.systemGray6
-        
         makeNowDate()
         makePickerBaseView(true)
         makePickerBaseView(false)
+        setItemMemoTextView()
+        setNotificationDatePicker()
+        setAddButton()
+        setSwitch()
         
         itemTitleTextField.delegate = self
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        notificationDayTextFiled.inputView = pickerView
-        notificationSwitch.isOn = false
-        notificationDayTextFiled.text = list[0]
-        
-        addButton.isEnabled = false
-        addButton.layer.cornerRadius = 20
-        addButton.setTitleColor(UIColor.systemGray4, for: .normal)
-        BPicker.minimumDate = APicker.date
     }
     
     //MARK: - DatePickerの実装
     func makeNowDate(){
-        //現在のデバイス時間をsystemTimeで出力
-        let now = NSDate()
+        let today = Date()
+        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         let formatter = DateFormatter()
         formatter.timeZone = NSTimeZone.system
         formatter.dateFormat = "yyyy年M月d日"
-        nowDate = formatter.string(from: now as Date)
-        
-        //内部変数の更新
-        AselectedDate = now as Date?
-        BselectedDate = now as Date?
+        nowDate = formatter.string(from: today as Date)
+        AselectedDate = today
+        BselectedDate = tomorrow
     }
     
     func makePickerBaseView(_ isA:Bool) {
         var myTextField = UITextField()
         myTextField = makeTextField(isA)
-        myTextField.text = isA ? "\(nowDate!)" : "----年--月--日"
+        let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        let formatter = DateFormatter()
+        formatter.timeZone = NSTimeZone.system
+        formatter.dateFormat = "yyyy年M月d日"
+        myTextField.text = isA ? "\(nowDate!)" : "\(formatter.string(from: nextDate))"
         
         if isA {
             ATextField = myTextField
@@ -103,19 +91,15 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         myTextField.textColor = UIColor.black
         myTextField.backgroundColor = UIColor.systemGray6
         myTextField.tintColor = UIColor.clear //キャレット(カーソル)を消す。
-        //        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 35))
-        //        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        //        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
-        //        toolbar.setItems([cancelItem, doneItem], animated: true)
-        //ここでピッカービューをセットする。
+
         if isA {
             APicker = makePicker(isA)
             myTextField.inputView = APicker
-            //            myTextField.inputView = toolbar
         } else {
             BPicker = makePicker(isA)
             myTextField.inputView = BPicker
-            //            myTextField.inputView = toolbar
+            let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+            BPicker.minimumDate = minimumDate
         }
         myTextField.textAlignment = .center
         
@@ -130,23 +114,32 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         myPicker.datePickerMode = .date
         myPicker.locale = NSLocale(localeIdentifier: "ja_JP") as Locale
         myPicker.preferredDatePickerStyle = .wheels
-        
-        //デリゲートの代わり
         myPicker.addTarget(self, action:  #selector(onDidChangeDate(sender:)), for: .valueChanged)
         
         return myPicker
     }
     
-    //    @objc func cancel() {
-    //        self.textField.text = ""
-    //        self.textField.endEditing(true)
-    //    }
-    //
-    //    @objc func done() {
-    //        self.textField.endEditing(true)
-    //    }
+    @objc internal func onDidChangeDate(sender: UIDatePicker){
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = "yyyy年M月d日"
+        
+        let mySelectedDate = formatter.string(from: sender.date)
+        if sender.tag == 1 {
+            ATextField.text = mySelectedDate
+            AselectedDate = sender.date
+            let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: AselectedDate)!
+            BPicker.minimumDate = minimumDate
+            
+            if AselectedDate > BselectedDate {
+                BTextField.text = (formatter.string(from: minimumDate))
+                BPicker.date = minimumDate
+            }
+        } else {
+            BTextField.text = mySelectedDate
+            BselectedDate = sender.date
+        }
+    }
     
-    //入力領域を引っ込める
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         itemTitleTextField.endEditing(true)
         ATextField.endEditing(true)
@@ -155,30 +148,33 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         notificationDayTextFiled.endEditing(true)
     }
     
-    //pickerが選択時デリゲートメソッド
-    @objc internal func onDidChangeDate(sender: UIDatePicker){
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "yyyy年M月d日"
-        
-        let mySelectedDate: NSString = formatter.string(from: sender.date) as NSString
-        if sender.tag == 1 {
-            ATextField.text = mySelectedDate as String
-            AselectedDate = sender.date
-        } else {
-            BTextField.text = mySelectedDate as String
-            BselectedDate = sender.date
-        }
-        
-        if sender.tag == 1 {
-            BPicker.minimumDate = AselectedDate
-            if AselectedDate > BselectedDate {
-                BTextField.text = (formatter.string(from: AselectedDate) as NSString) as String
-            }
-        }
-        
+    //MARK: - 各種部品の初期設定
+    func setItemMemoTextView() {
+        itemMemoTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        itemMemoTextView.layer.borderWidth = 1
+        itemMemoTextView.layer.cornerRadius = 20
+        itemMemoTextView.backgroundColor = UIColor.systemGray6
     }
     
+    func setNotificationDatePicker() {
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        notificationDayTextFiled.inputView = pickerView
+        notificationDayTextFiled.text = list[0]
+    }
     
+    func setAddButton() {
+        addButton.layer.cornerRadius = 20
+        addButton.setTitleColor(UIColor.systemGray4, for: .normal)
+        addButton.isEnabled = false
+    }
+    
+    func setSwitch() {
+        limitDateSwitch.isOn = false
+        notificationSwitch.isOn = false
+    }
+    
+    //MARK: - 通知の設定
     func setNotification() {
         let untilDay = notificationDayTextFiled.text
         let day = Int(untilDay!)! * -1
@@ -206,6 +202,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         }
     }
     
+    //MARK: - TitleTextFieldのデリゲートメソッド
     @IBAction func checkTitleIsNil(_ sender: UITextField) {
         if sender.text == "" {
             addButton.isEnabled = false
@@ -216,6 +213,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         }
     }
     
+    //MARK: - 追加ボタンが押された際の処理
     @IBAction func addButtonPressed(_ sender: UIButton) {
         itemTitle = itemTitleTextField.text!
         itemMemo = itemMemoTextView.text
@@ -224,7 +222,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         if limitDateSwitch.isOn == true {
             limitDate = BselectedDate
         } else {
-            limitDate = AselectedDate
+            limitDate = AselectedDate //期限日が設定されない場合は、開始日を格納しておき、それを元に後々の処理を判別
         }
         
         if notificationSwitch.isOn == true && limitDateSwitch.isOn == true {
