@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class ItemContentViewController: UIViewController {
-
+    
     @IBOutlet weak var contentTitleLabel: UILabel!
     @IBOutlet weak var contentPassedDaysLabel: UILabel!
     @IBOutlet weak var contentMemoTextView: UITextView!
@@ -27,29 +27,45 @@ class ItemContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRealm()
-        
-        contentMemoTextView.layer.cornerRadius = 20
-        contentMemoTextView.backgroundColor = UIColor.systemGray6
-        
+        setAllContent()
+    }
+    
+    private func setRealm() {
+        itemList = realm.objects(ItemData.self)
+    }
+    
+    func setAllContent() {
         contentTitleLabel.text = itemList[contentItemIndexPath].itemTitle
         contentPassedDaysLabel.text = calcInterval(date: itemList[contentItemIndexPath].launchDate)
         contentMemoTextView.text = itemList[contentItemIndexPath].itemMemo
         contentLaunchDateLabel.text = dateFormat(date: itemList[contentItemIndexPath].launchDate)
-        setLimitLabel()
-        limitDateLabel.text = limitDateString
+        
+        //期限まであと何日か表す
         if itemList[contentItemIndexPath].limitDate != itemList[contentItemIndexPath].launchDate {
             untilLimitDateLabel.text = calcUntilDateInterval(date: itemList[contentItemIndexPath].limitDate)
         } else {
             untilLimitDateLabel.text = "期限なし"
         }
         
-        setNotificationDateLabel()
+        //期限日を表す
+        if itemList[contentItemIndexPath].launchDate == itemList[contentItemIndexPath].limitDate {
+            limitDateString = "期限なし"
+        } else {
+            limitDateString = dateFormat(date: itemList[contentItemIndexPath].limitDate)
+        }
+        limitDateLabel.text = limitDateString
         
+        //通知日を表す
+        if itemList[contentItemIndexPath].notificationDate != "" {
+            notificationDateLabel.text = "期限日の \(itemList[contentItemIndexPath].notificationDate) 日前"
+        } else {
+            notificationDateLabel.text = "通知設定なし"
+        }
+        
+        //メモビューの設定
+        contentMemoTextView.layer.cornerRadius = 20
+        contentMemoTextView.backgroundColor = UIColor.systemGray6
         contentMemoTextView.isEditable = false
-    }
-    
-    private func setRealm() {
-        itemList = realm.objects(ItemData.self)
     }
     
     // 経過した日にちをStringで返すメソッド
@@ -61,6 +77,7 @@ class ItemContentViewController: UIViewController {
         return dayInterval
     }
     
+    //期限までの日数をStringで返すメソッド
     func calcUntilDateInterval(date:Date) -> String {
         let date1 = Date()
         let date2 = itemList[contentItemIndexPath].limitDate
@@ -77,23 +94,8 @@ class ItemContentViewController: UIViewController {
         return dateString
     }
     
-    func setLimitLabel() {
-        if itemList[contentItemIndexPath].launchDate == itemList[contentItemIndexPath].limitDate {
-            limitDateString = "期限なし"
-        } else {
-            limitDateString = dateFormat(date: itemList[contentItemIndexPath].limitDate)
-        }
-    }
     
-    func setNotificationDateLabel() {
-        if itemList[contentItemIndexPath].notificationDate != "" {
-            notificationDateLabel.text = "期限日の \(itemList[contentItemIndexPath].notificationDate) 日前"
-        } else {
-            notificationDateLabel.text = "通知設定なし"
-        }
     
-    }
-
     @IBAction func buttonPressedToEditVC(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "goToEditVC", sender: nil)
     }
