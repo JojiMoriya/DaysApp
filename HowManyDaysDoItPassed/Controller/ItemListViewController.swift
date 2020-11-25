@@ -23,10 +23,11 @@ class ItemListViewController: UIViewController {
         itemListTableView.dataSource = self
         itemListTableView.layer.cornerRadius = 20
         itemListTableView.rowHeight = 70
+        
         setRealm()
         
         navigationItem.leftBarButtonItem = editButtonItem
-        editButtonItem.title = "編集"
+        
         print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true))
         buttonPendingListTouchUpInside()
         
@@ -148,6 +149,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndexPathRow = indexPath.row//閲覧するCellのindexPathを取得
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         performSegue(withIdentifier: "toItemContentVC", sender: selectedIndexPathRow)
     }
     
