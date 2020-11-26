@@ -22,7 +22,7 @@ class ItemListViewController: UIViewController {
         itemListTableView.delegate = self
         itemListTableView.dataSource = self
         itemListTableView.layer.cornerRadius = 20
-        itemListTableView.rowHeight = 70
+        itemListTableView.rowHeight = 75
         
         setRealm()
         
@@ -99,6 +99,14 @@ class ItemListViewController: UIViewController {
         let dayInterval = String(format: "%d日", day)
         return dayInterval
     }
+    //期限までの日数をStringで返すメソッド
+    func calcUntilDateInterval(date:Date) -> String {
+        let date1 = Date()
+        let date2 = date
+        let elapsedDays = Calendar.current.dateComponents([.day], from: date1, to: date2).day!
+        let dayInterval = String(format: "あと%d日", elapsedDays )
+        return dayInterval
+    }
 }
 
 extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -111,6 +119,12 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         let item = itemList[indexPath.row]
         cell.itemTitleLabel.text = item.itemTitle
         cell.passedDaysLabel.text = calcInterval(date: item.launchDate)
+        
+        if item.limitDate != item.launchDate {
+            cell.untilLimitDaysLabel.text = calcUntilDateInterval(date: item.limitDate)
+        } else {
+            cell.untilLimitDaysLabel.text = "--"
+        }
         return cell
     }
     
