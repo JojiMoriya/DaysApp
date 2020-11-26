@@ -41,6 +41,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         makeNowDate()
         makePickerBaseView(true)
         makePickerBaseView(false)
+        setMinimumDate()
         setItemMemoTextView()
         setNotificationDatePicker()
         setAddButton()
@@ -52,7 +53,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     //MARK: - DatePickerの実装
     func makeNowDate(){
         let today = Date()
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        let tomorrow = Calendar.current.date(byAdding: .day, value: +1, to: Date())!
         let formatter = DateFormatter()
         formatter.timeZone = NSTimeZone.system
         formatter.dateFormat = "yyyy年M月d日"
@@ -64,11 +65,11 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     func makePickerBaseView(_ isA:Bool) {
         var myTextField = UITextField()
         myTextField = makeTextField(isA)
-        let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+//        let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         let formatter = DateFormatter()
         formatter.timeZone = NSTimeZone.system
         formatter.dateFormat = "yyyy年M月d日"
-        myTextField.text = isA ? "\(nowDate!)" : "\(formatter.string(from: nextDate))"
+        myTextField.text = isA ? "\(nowDate!)" : "----年--月--日"
         
         if isA {
             ATextField = myTextField
@@ -98,8 +99,6 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         } else {
             BPicker = makePicker(isA)
             myTextField.inputView = BPicker
-            let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
-            BPicker.minimumDate = minimumDate
         }
         myTextField.textAlignment = .center
         
@@ -127,16 +126,35 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         if sender.tag == 1 {
             ATextField.text = mySelectedDate
             AselectedDate = sender.date
+        } else {
+            BTextField.text = mySelectedDate
+            BselectedDate = sender.date
+        }
+        
+        if sender.tag == 1 {
             let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: AselectedDate)!
             BPicker.minimumDate = minimumDate
-            
             if AselectedDate > BselectedDate {
                 BTextField.text = (formatter.string(from: minimumDate))
                 BPicker.date = minimumDate
             }
         } else {
-            BTextField.text = mySelectedDate
-            BselectedDate = sender.date
+            if notificationSwitch.isOn == true {
+                let untilDay = notificationDayTextFiled.text
+                let day = Int(untilDay!)! * -1
+                let limitday = BselectedDate!
+                let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
+                if notificationDay <= Date() {
+                    alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
+                    addButton.isEnabled = false
+                    addButton.setTitleColor(UIColor.systemGray4, for: .normal)
+                } else {
+                    if itemTitleTextField.text != "" {
+                        addButton.isEnabled = true
+                        addButton.setTitleColor(UIColor.black, for: .normal)
+                    }
+                }
+            }
         }
     }
     
@@ -149,6 +167,10 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     }
     
     //MARK: - 各種部品の初期設定
+    func setMinimumDate() {
+        let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        BPicker.minimumDate = minimumDate
+    }
     func setItemMemoTextView() {
         itemMemoTextView.layer.borderColor = UIColor.systemGray4.cgColor
         itemMemoTextView.layer.borderWidth = 1
@@ -213,6 +235,28 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         }
     }
     
+    @IBAction func checkNotificationIsCollect(_ sender: UISwitch) {
+        if notificationSwitch.isOn == true {
+            let untilDay = notificationDayTextFiled.text
+            let day = Int(untilDay!)! * -1
+            let limitday = BPicker.date
+            let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
+            if notificationDay <= Date() {
+                addButton.isEnabled = false
+                addButton.setTitleColor(UIColor.systemGray4, for: .normal)
+            } else {
+                if itemTitleTextField.text != "" {
+                    addButton.isEnabled = true
+                    addButton.setTitleColor(UIColor.black, for: .normal)
+                }
+            }
+        } else {
+            if itemTitleTextField.text != "" {
+                addButton.isEnabled = true
+                addButton.setTitleColor(UIColor.black, for: .normal)
+            }
+        }
+    }
     //MARK: - 追加ボタンが押された際の処理
     @IBAction func addButtonPressed(_ sender: UIButton) {
         itemTitle = itemTitleTextField.text!
@@ -261,8 +305,12 @@ extension ItemAddViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
         if notificationDay <= Date() {
             alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
             addButton.isEnabled = false
+            addButton.setTitleColor(UIColor.systemGray4, for: .normal)
         } else {
-            addButton.isEnabled = true
+            if itemTitleTextField.text != "" {
+                addButton.isEnabled = true
+                addButton.setTitleColor(UIColor.black, for: .normal)
+            }
         }
     }
     
