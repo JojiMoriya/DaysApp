@@ -8,9 +8,10 @@
 import UIKit
 
 class ItemTableViewCell: UITableViewCell {
-
-    @IBOutlet private weak var itemTitleLabel: UILabel!
-    @IBOutlet private weak var passedDays: UILabel!
+    @IBOutlet weak var itemTitleLabel: UILabel!
+    @IBOutlet weak var passedDaysLabel: UILabel!
+    @IBOutlet weak var untilLimitDaysLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,7 +20,7 @@ class ItemTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        
     }
 
 }
