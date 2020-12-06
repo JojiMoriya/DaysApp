@@ -138,13 +138,29 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
                 BTextField.text = (formatter.string(from: minimumDate))
                 BPicker.date = minimumDate
             }
+            if notificationSwitch.isOn == true {
+                let untilDay = notificationDayTextFiled.text
+                let day = Int(untilDay!)! * -1
+                let limitday = BselectedDate!
+                let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
+                if notificationDay <= AselectedDate {
+                    alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
+                    addButton.isEnabled = false
+                    addButton.setTitleColor(UIColor.systemGray4, for: .normal)
+                } else {
+                    if itemTitleTextField.text != "" {
+                        addButton.isEnabled = true
+                        addButton.setTitleColor(UIColor.black, for: .normal)
+                    }
+                }
+            }
         } else {
             if notificationSwitch.isOn == true {
                 let untilDay = notificationDayTextFiled.text
                 let day = Int(untilDay!)! * -1
                 let limitday = BselectedDate!
                 let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
-                if notificationDay <= Date() {
+                if notificationDay <= AselectedDate {
                     alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
                     addButton.isEnabled = false
                     addButton.setTitleColor(UIColor.systemGray4, for: .normal)
