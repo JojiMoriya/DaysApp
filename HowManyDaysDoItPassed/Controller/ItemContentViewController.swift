@@ -70,7 +70,8 @@ class ItemContentViewController: UIViewController {
         
         //メモビューの設定
         contentMemoTextView.layer.cornerRadius = 20
-        contentMemoTextView.backgroundColor = UIColor.systemGray6
+        contentMemoTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        contentMemoTextView.layer.borderWidth = 1
         contentMemoTextView.isEditable = false
     }
     
