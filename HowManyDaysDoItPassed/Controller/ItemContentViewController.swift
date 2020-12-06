@@ -17,6 +17,9 @@ class ItemContentViewController: UIViewController {
     @IBOutlet weak var limitDateLabel: UILabel!
     @IBOutlet weak var untilLimitDateLabel: UILabel!
     @IBOutlet weak var notificationDateLabel: UILabel!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var passedDaysView: UIView!
+    @IBOutlet weak var untilLimitDaysView: UIView!
     
     private let realm = try! Realm()
     private var itemList: Results<ItemData>!
@@ -28,6 +31,9 @@ class ItemContentViewController: UIViewController {
         super.viewDidLoad()
         setRealm()
         setAllContent()
+        contentView.layer.cornerRadius = 20.0
+        passedDaysView.layer.cornerRadius = 20.0
+        untilLimitDaysView.layer.cornerRadius = 20.0
     }
     
     private func setRealm() {
