@@ -57,44 +57,15 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         pickerView.dataSource = self
     }
     
-    private func setRealm() {
-        itemList = realm.objects(ItemData.self)
+    override func viewDidAppear(_ animated: Bool) {
+        if itemList[editItemIndexPath].notificationDate != "" {
+            let selectRow = Int(itemList[editItemIndexPath].notificationDate)! - 1
+            pickerView.selectRow(selectRow, inComponent: 0, animated: false)
+        } 
     }
     
-    func setAllContent() {
-        editItemTitleTextFiled.text = itemList[editItemIndexPath].itemTitle
-        ATextField.text = dateFormat(date: itemList[editItemIndexPath].launchDate)
-        AselectedDate = itemList[editItemIndexPath].launchDate
-        APicker.date = itemList[editItemIndexPath].launchDate
-        BTextField.text = setLimitDate()
-        if itemList[editItemIndexPath].launchDate == itemList[editItemIndexPath].limitDate {
-            let launchDay = itemList[editItemIndexPath].launchDate
-            let nextDay = Calendar.current.date(byAdding: .day, value: +1, to: launchDay)!
-            BselectedDate = nextDay
-            BPicker.date = nextDay
-        } else {
-            BselectedDate = itemList[editItemIndexPath].limitDate
-            BPicker.date = itemList[editItemIndexPath].limitDate
-        }
-        
-        notificationDateTextFiled.inputView = pickerView
-        
-        editItemTextView.text = itemList[editItemIndexPath].itemMemo
-        editItemTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        editItemTextView.layer.borderWidth = 1
-        editItemTextView.layer.cornerRadius = 20
-        editItemTextView.backgroundColor = UIColor.systemGray6
-        saveButton.layer.cornerRadius = 20
-        
-        if itemList[editItemIndexPath].notificationDate != "" {
-            notificationDateTextFiled.text = itemList[editItemIndexPath].notificationDate
-            let inComponent = Int(itemList[editItemIndexPath].notificationDate)! - 1
-            print(inComponent)
-            pickerView.selectRow(inComponent, inComponent: 0, animated: false)
-        } else {
-            notificationDateTextFiled.text = list[0]
-            pickerView.selectRow(0, inComponent: 0, animated: false)
-        }
+    private func setRealm() {
+        itemList = realm.objects(ItemData.self)
     }
     
     //MARK: - DatePickerの実装
@@ -183,13 +154,29 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
                 BTextField.text = (formatter.string(from: minimumDate))
                 BPicker.date = minimumDate
             }
+            if notificationSwitch.isOn == true {
+                let untilDay = notificationDateTextFiled.text
+                let day = Int(untilDay!)! * -1
+                let limitday = BselectedDate!
+                let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
+                if notificationDay <= AselectedDate {
+                    alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
+                    saveButton.isEnabled = false
+                    saveButton.setTitleColor(UIColor.systemGray4, for: .normal)
+                } else {
+                    if editItemTitleTextFiled.text != "" {
+                        saveButton.isEnabled = true
+                        saveButton.setTitleColor(UIColor.black, for: .normal)
+                    }
+                }
+            }
         } else {
             if notificationSwitch.isOn == true {
                 let untilDay = notificationDateTextFiled.text
                 let day = Int(untilDay!)! * -1
                 let limitday = BselectedDate!
                 let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
-                if notificationDay <= Date() {
+                if notificationDay <= AselectedDate {
                     alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
                     saveButton.isEnabled = false
                     saveButton.setTitleColor(UIColor.systemGray4, for: .normal)
@@ -209,6 +196,44 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         BTextField.endEditing(true)
         editItemTextView.endEditing(true)
         notificationDateTextFiled.endEditing(true)
+    }
+    
+    //MARK: - 編集前コンテンツの設定
+    
+    func setAllContent() {
+        editItemTitleTextFiled.text = itemList[editItemIndexPath].itemTitle
+        ATextField.text = dateFormat(date: itemList[editItemIndexPath].launchDate)
+        AselectedDate = itemList[editItemIndexPath].launchDate
+        APicker.date = itemList[editItemIndexPath].launchDate
+        BTextField.text = setLimitDate()
+        if itemList[editItemIndexPath].launchDate == itemList[editItemIndexPath].limitDate {
+            let launchDay = itemList[editItemIndexPath].launchDate
+            let nextDay = Calendar.current.date(byAdding: .day, value: +1, to: launchDay)!
+            BselectedDate = nextDay
+            BPicker.date = nextDay
+        } else {
+            BselectedDate = itemList[editItemIndexPath].limitDate
+            BPicker.date = itemList[editItemIndexPath].limitDate
+        }
+        
+        notificationDateTextFiled.inputView = pickerView
+        
+        editItemTextView.text = itemList[editItemIndexPath].itemMemo
+        editItemTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        editItemTextView.layer.borderWidth = 1
+        editItemTextView.layer.cornerRadius = 20
+        editItemTextView.backgroundColor = UIColor.systemGray6
+        saveButton.layer.cornerRadius = 20
+        
+        if itemList[editItemIndexPath].notificationDate != "" {
+            notificationDateTextFiled.text = itemList[editItemIndexPath].notificationDate
+            let inComponent = Int(itemList[editItemIndexPath].notificationDate)! - 1
+            print(inComponent)
+            pickerView.selectRow(inComponent, inComponent: 0, animated: false)
+        } else {
+            notificationDateTextFiled.text = list[0]
+            pickerView.selectRow(0, inComponent: 0, animated: false)
+        }
     }
     
     func setLimitDate() -> String{
@@ -240,6 +265,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
             pickerView.selectRow(selectRow, inComponent: 0, animated: false)
         } else {
             notificationSwitch.isOn = false
+            notificationDateTextFiled.text = list[0]
         }
     }
     
@@ -290,6 +316,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         }
     }
     
+    //MARK: - 通知スウィッチのデリゲートメソッド
     @IBAction func checkNotificationIsCollect(_ sender: UISwitch) {
         if notificationSwitch.isOn == true {
             let untilDay = notificationDateTextFiled.text
@@ -313,7 +340,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         }
     }
     
-    
+    //MARK: - セーブボタンが押された際のメソッド
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         editedItemTitle = editItemTitleTextFiled.text ?? ""
         editedLaunchDate = AselectedDate
@@ -328,7 +355,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [itemList[editItemIndexPath].notificationID])
         }
         
-        if notificationSwitch.isOn == true && limitDateSwitch.isOn == true{
+        if notificationSwitch.isOn == true && limitDateSwitch.isOn == true {
             notificationDate = notificationDateTextFiled.text ?? ""
             setNotification()
         }
