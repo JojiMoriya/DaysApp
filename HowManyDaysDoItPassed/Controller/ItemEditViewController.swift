@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotificationCenterDelegate {
+class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotificationCenterDelegate, UITextViewDelegate {
 
     @IBOutlet weak var editItemTitleTextFiled: UITextField!
     @IBOutlet weak var firstView: UIView!
@@ -55,6 +55,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         
         pickerView.delegate = self
         pickerView.dataSource = self
+        editItemTextView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -338,6 +339,19 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
                 saveButton.setTitleColor(UIColor.black, for: .normal)
             }
         }
+    }
+    
+    //MARK: - TextViewのキーボード監視
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
+            self.view.frame.origin.y = -200
+        }, completion: nil)
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.0, delay: 0.0, animations: {
+            self.view.frame.origin.y = 90
+        }, completion: nil)
     }
     
     //MARK: - セーブボタンが押された際のメソッド

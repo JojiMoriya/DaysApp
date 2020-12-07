@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotificationCenterDelegate, UIGestureRecognizerDelegate {
+class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotificationCenterDelegate, UIGestureRecognizerDelegate, UITextViewDelegate {
     @IBOutlet weak var itemTitleTextField: UITextField!
     @IBOutlet weak var itemMemoTextView: UITextView!
     @IBOutlet weak var firstView: UIView!
@@ -48,6 +48,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         setSwitch()
         
         itemTitleTextField.delegate = self
+        itemMemoTextView.delegate = self
     }
     
     //MARK: - DatePickerの実装
@@ -65,7 +66,6 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     func makePickerBaseView(_ isA:Bool) {
         var myTextField = UITextField()
         myTextField = makeTextField(isA)
-//        let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         let formatter = DateFormatter()
         formatter.timeZone = NSTimeZone.system
         formatter.dateFormat = "yyyy年M月d日"
@@ -273,6 +273,20 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
             }
         }
     }
+    
+    //MARK: - TextViewのキーボード監視
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
+            self.view.frame.origin.y = -220
+        }, completion: nil)
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.0, delay: 0.0, animations: {
+            self.view.frame.origin.y = 0
+        }, completion: nil)
+    }
+ 
     //MARK: - 追加ボタンが押された際の処理
     @IBAction func addButtonPressed(_ sender: UIButton) {
         itemTitle = itemTitleTextField.text!
