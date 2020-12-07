@@ -92,7 +92,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         myTextField.textColor = UIColor.black
         myTextField.backgroundColor = UIColor.systemGray6
         myTextField.tintColor = UIColor.clear //キャレット(カーソル)を消す。
-
+        
         if isA {
             APicker = makePicker(isA)
             myTextField.inputView = APicker
@@ -251,8 +251,17 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         }
     }
     
+    //MARK: - notificationSwitchのデリゲートメソッド
     @IBAction func checkNotificationIsCollect(_ sender: UISwitch) {
         if notificationSwitch.isOn == true {
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: [.alert, .sound, .badge]){
+                (granted, _) in
+                if granted{
+                    UNUserNotificationCenter.current().delegate = self
+                }
+            }
+            
             let untilDay = notificationDayTextFiled.text
             let day = Int(untilDay!)! * -1
             let limitday = BPicker.date
@@ -286,7 +295,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
             self.view.frame.origin.y = 0
         }, completion: nil)
     }
- 
+    
     //MARK: - 追加ボタンが押された際の処理
     @IBAction func addButtonPressed(_ sender: UIButton) {
         itemTitle = itemTitleTextField.text!

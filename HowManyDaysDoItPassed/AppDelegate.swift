@@ -15,15 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: [.alert, .sound, .badge]){
-            (granted, _) in
-            if granted{
-                UNUserNotificationCenter.current().delegate = self
-            }
-        }
-
         return true
     }
 
