@@ -7,22 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360384D5256E1AE600EF1501 /* ItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360384D4256E1AE600EF1501 /* ItemListViewController.swift */; };
 		360F9AA7254EABC70040DA7B /* ItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F9AA6254EABC70040DA7B /* ItemData.swift */; };
+		36376E9D255BEC7C00A18693 /* ItemEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36376E9C255BEC7C00A18693 /* ItemEditViewController.swift */; };
 		363AF2F8254E6AD700E3F3DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363AF2F7254E6AD700E3F3DB /* AppDelegate.swift */; };
 		363AF2FA254E6AD700E3F3DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363AF2F9254E6AD700E3F3DB /* SceneDelegate.swift */; };
 		363AF2FF254E6AD700E3F3DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 363AF2FD254E6AD700E3F3DB /* Main.storyboard */; };
 		363AF301254E6ADA00E3F3DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 363AF300254E6ADA00E3F3DB /* Assets.xcassets */; };
 		363AF304254E6ADA00E3F3DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 363AF302254E6ADA00E3F3DB /* LaunchScreen.storyboard */; };
-		363AF30E254E6D5400E3F3DB /* ItemListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363AF30D254E6D5400E3F3DB /* ItemListTableViewController.swift */; };
 		363AF312254E736300E3F3DB /* ItemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363AF311254E736300E3F3DB /* ItemAddViewController.swift */; };
-		364B113B25542A8200A9FEE1 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364B113A25542A8200A9FEE1 /* CheckBox.swift */; };
 		36E6639C25510CE700DACBDC /* ItemContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E6639B25510CE700DACBDC /* ItemContentViewController.swift */; };
 		36F99E0B254FF05B009B133D /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */; };
 		4B229956CA0706B73DD03A33 /* Pods_HowManyDaysDoItPassed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453C81123D1D915CDDD1114F /* Pods_HowManyDaysDoItPassed.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		360384D4256E1AE600EF1501 /* ItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewController.swift; sourceTree = "<group>"; };
 		360F9AA6254EABC70040DA7B /* ItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemData.swift; sourceTree = "<group>"; };
+		36376E9C255BEC7C00A18693 /* ItemEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditViewController.swift; sourceTree = "<group>"; };
 		363AF2F4254E6AD700E3F3DB /* HowManyDaysDoItPassed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HowManyDaysDoItPassed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		363AF2F7254E6AD700E3F3DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		363AF2F9254E6AD700E3F3DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,9 +32,7 @@
 		363AF300254E6ADA00E3F3DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		363AF303254E6ADA00E3F3DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		363AF305254E6ADA00E3F3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		363AF30D254E6D5400E3F3DB /* ItemListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListTableViewController.swift; sourceTree = "<group>"; };
 		363AF311254E736300E3F3DB /* ItemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddViewController.swift; sourceTree = "<group>"; };
-		364B113A25542A8200A9FEE1 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		36E6639B25510CE700DACBDC /* ItemContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemContentViewController.swift; sourceTree = "<group>"; };
 		36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		453C81123D1D915CDDD1114F /* Pods_HowManyDaysDoItPassed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HowManyDaysDoItPassed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,9 +64,10 @@
 		360F9AA4254EAB7B0040DA7B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				363AF30D254E6D5400E3F3DB /* ItemListTableViewController.swift */,
+				360384D4256E1AE600EF1501 /* ItemListViewController.swift */,
 				363AF311254E736300E3F3DB /* ItemAddViewController.swift */,
 				36E6639B25510CE700DACBDC /* ItemContentViewController.swift */,
+				36376E9C255BEC7C00A18693 /* ItemEditViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -117,7 +118,6 @@
 			children = (
 				36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */,
 				363AF2FD254E6AD700E3F3DB /* Main.storyboard */,
-				364B113A25542A8200A9FEE1 /* CheckBox.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -244,12 +244,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				364B113B25542A8200A9FEE1 /* CheckBox.swift in Sources */,
+				360384D5256E1AE600EF1501 /* ItemListViewController.swift in Sources */,
 				363AF2F8254E6AD700E3F3DB /* AppDelegate.swift in Sources */,
 				363AF312254E736300E3F3DB /* ItemAddViewController.swift in Sources */,
 				363AF2FA254E6AD700E3F3DB /* SceneDelegate.swift in Sources */,
-				363AF30E254E6D5400E3F3DB /* ItemListTableViewController.swift in Sources */,
 				36E6639C25510CE700DACBDC /* ItemContentViewController.swift in Sources */,
+				36376E9D255BEC7C00A18693 /* ItemEditViewController.swift in Sources */,
 				36F99E0B254FF05B009B133D /* ItemTableViewCell.swift in Sources */,
 				360F9AA7254EABC70040DA7B /* ItemData.swift in Sources */,
 			);
@@ -409,7 +409,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joji-engineer.-------";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -429,7 +429,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joji-engineer.-------";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
