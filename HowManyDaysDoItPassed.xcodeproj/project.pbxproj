@@ -16,6 +16,7 @@
 		363AF301254E6ADA00E3F3DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 363AF300254E6ADA00E3F3DB /* Assets.xcassets */; };
 		363AF304254E6ADA00E3F3DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 363AF302254E6ADA00E3F3DB /* LaunchScreen.storyboard */; };
 		363AF312254E736300E3F3DB /* ItemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363AF311254E736300E3F3DB /* ItemAddViewController.swift */; };
+		365155D9258265A8001570C9 /* MyScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365155D8258265A8001570C9 /* MyScrollView.swift */; };
 		36E6639C25510CE700DACBDC /* ItemContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E6639B25510CE700DACBDC /* ItemContentViewController.swift */; };
 		36F99E0B254FF05B009B133D /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */; };
 		4B229956CA0706B73DD03A33 /* Pods_HowManyDaysDoItPassed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453C81123D1D915CDDD1114F /* Pods_HowManyDaysDoItPassed.framework */; };
@@ -33,6 +34,7 @@
 		363AF303254E6ADA00E3F3DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		363AF305254E6ADA00E3F3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		363AF311254E736300E3F3DB /* ItemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddViewController.swift; sourceTree = "<group>"; };
+		365155D8258265A8001570C9 /* MyScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScrollView.swift; sourceTree = "<group>"; };
 		36E6639B25510CE700DACBDC /* ItemContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemContentViewController.swift; sourceTree = "<group>"; };
 		36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		453C81123D1D915CDDD1114F /* Pods_HowManyDaysDoItPassed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HowManyDaysDoItPassed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +120,7 @@
 			children = (
 				36F99E0A254FF05B009B133D /* ItemTableViewCell.swift */,
 				363AF2FD254E6AD700E3F3DB /* Main.storyboard */,
+				365155D8258265A8001570C9 /* MyScrollView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				363AF2F8254E6AD700E3F3DB /* AppDelegate.swift in Sources */,
 				363AF312254E736300E3F3DB /* ItemAddViewController.swift in Sources */,
 				363AF2FA254E6AD700E3F3DB /* SceneDelegate.swift in Sources */,
+				365155D9258265A8001570C9 /* MyScrollView.swift in Sources */,
 				36E6639C25510CE700DACBDC /* ItemContentViewController.swift in Sources */,
 				36376E9D255BEC7C00A18693 /* ItemEditViewController.swift in Sources */,
 				36F99E0B254FF05B009B133D /* ItemTableViewCell.swift in Sources */,
