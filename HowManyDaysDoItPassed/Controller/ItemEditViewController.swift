@@ -350,7 +350,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     
     func textViewDidEndEditing(_ textView: UITextView) {
         UIView.animate(withDuration: 0.0, delay: 0.0, animations: {
-            self.view.frame.origin.y = 90
+            self.view.frame.origin.y = 50
         }, completion: nil)
     }
     

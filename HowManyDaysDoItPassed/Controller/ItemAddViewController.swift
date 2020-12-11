@@ -286,13 +286,13 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     //MARK: - TextViewのキーボード監視
     func textViewDidBeginEditing(_ textView: UITextView) {
         UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
-            self.view.frame.origin.y = -220
+            self.view.frame.origin.y = -190
         }, completion: nil)
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         UIView.animate(withDuration: 0.0, delay: 0.0, animations: {
-            self.view.frame.origin.y = 0
+            self.view.frame.origin.y = 62
         }, completion: nil)
     }
     
