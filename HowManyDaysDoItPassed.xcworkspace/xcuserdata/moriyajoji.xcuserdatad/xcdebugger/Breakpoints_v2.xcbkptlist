@@ -16,7 +16,71 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
             endingLineNumber = "28"
-            landmarkName = "AppDelegate"
+            landmarkName = "application(_:configurationForConnecting:options:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C12300F8-398C-4FFE-AAA3-A95DAFF4E414"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HowManyDaysDoItPassed/View/CheckBox.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "CheckBox"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "C12300F8-398C-4FFE-AAA3-A95DAFF4E414 - 3c88c89201b5bf83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HowManyDaysDoItPassed.CheckBox.init(frame: __C.CGRect) -&gt; HowManyDaysDoItPassed.CheckBox"
+                  moduleName = "HowManyDaysDoItPassed"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/moriyajoji/Desktop/HowManyDaysDoItPassed/HowManyDaysDoItPassed/View/CheckBox.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "559">
+               </Location>
+               <Location
+                  uuid = "C12300F8-398C-4FFE-AAA3-A95DAFF4E414 - 419081eb31fbb885"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HowManyDaysDoItPassed.CheckBox.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;HowManyDaysDoItPassed.CheckBox&gt;"
+                  moduleName = "HowManyDaysDoItPassed"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/moriyajoji/Desktop/HowManyDaysDoItPassed/HowManyDaysDoItPassed/View/CheckBox.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "469">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77C91342-871E-418B-9980-5FEC1D18EF2C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HowManyDaysDoItPassed/View/CheckBox.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "CheckBox"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
