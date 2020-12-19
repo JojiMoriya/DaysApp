@@ -18,6 +18,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     @IBOutlet weak var notificationSwitch: UISwitch!
     @IBOutlet weak var notificationDateTextFiled: UITextField!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var scrollView: MyScrollView!
     
     private var nowDate:String!
     private var AselectedDate:Date!
@@ -37,6 +38,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     
     var pickerView: UIPickerView = UIPickerView()
     let list = ["1", "2", "3", "4", "5", "6", "7"]
+    var activeTextView = UITextView()
     
     private let realm = try! Realm()
     private var itemList: Results<ItemData>!
@@ -56,6 +58,13 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         pickerView.delegate = self
         pickerView.dataSource = self
         editItemTextView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -342,16 +351,38 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     }
     
     //MARK: - TextViewのキーボード監視
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        activeTextView = editItemTextView
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
-            self.view.frame.origin.y = -200
-        }, completion: nil)
+        activeTextView = editItemTextView
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        UIView.animate(withDuration: 0.0, delay: 0.0, animations: {
-            self.view.frame.origin.y = 50
-        }, completion: nil)
+        activeTextView = UITextView()
+    }
+    
+    @objc func handleKeyboardWillShowNotification(_ notification: Notification) {
+        if activeTextView == editItemTextView {
+            let userInfo = notification.userInfo!
+            let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+            let myBoundSize: CGSize = UIScreen.main.bounds.size
+            
+            let textViewLimit = activeTextView.frame.origin.y + activeTextView.frame.height + 100.0
+            let keyboardLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+            
+            if textViewLimit >= keyboardLimit {
+                scrollView.contentOffset.y = textViewLimit - keyboardLimit
+            }
+        }
+    }
+    
+    @objc func handleKeyboardWillHideNotification(_ notification: Notification) {
+        if activeTextView == editItemTextView {
+            scrollView.contentOffset.y = 0
+        }
     }
     
     //MARK: - セーブボタンが押された際のメソッド

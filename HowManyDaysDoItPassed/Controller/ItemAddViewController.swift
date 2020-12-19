@@ -17,6 +17,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     @IBOutlet weak var notificationSwitch: UISwitch!
     @IBOutlet weak var notificationDayTextFiled: UITextField!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var scrollView: MyScrollView!
     
     var itemTitle = ""
     var launchDate = Date()
@@ -35,6 +36,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     
     private var pickerView: UIPickerView = UIPickerView()
     private let list = ["1", "2", "3", "4", "5", "6", "7"]
+    private var activeTextView = UITextView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,13 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         
         itemTitleTextField.delegate = self
         itemMemoTextView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - DatePickerの実装
@@ -284,16 +293,38 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     }
     
     //MARK: - TextViewのキーボード監視
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        activeTextView = itemMemoTextView
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
-            self.view.frame.origin.y = -190
-        }, completion: nil)
+        activeTextView = itemMemoTextView
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        UIView.animate(withDuration: 0.0, delay: 0.0, animations: {
-            self.view.frame.origin.y = 62
-        }, completion: nil)
+        activeTextView = UITextView()
+    }
+    
+    @objc func handleKeyboardWillShowNotification(_ notification: Notification) {
+        if activeTextView == itemMemoTextView {
+            let userInfo = notification.userInfo!
+            let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+            let myBoundSize: CGSize = UIScreen.main.bounds.size
+            
+            let textViewLimit = activeTextView.frame.origin.y + activeTextView.frame.height + 100.0
+            let keyboardLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+            
+            if textViewLimit >= keyboardLimit {
+                scrollView.contentOffset.y = textViewLimit - keyboardLimit
+            }
+        }
+    }
+    
+    @objc func handleKeyboardWillHideNotification(_ notification: Notification) {
+        if activeTextView == itemMemoTextView {
+            scrollView.contentOffset.y = 0
+        }
     }
     
     //MARK: - 追加ボタンが押された際の処理

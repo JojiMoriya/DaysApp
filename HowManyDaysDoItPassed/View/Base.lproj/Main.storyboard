@@ -367,6 +367,7 @@
                         <outlet property="limitDateSwitch" destination="YR5-2K-Kgh" id="G2I-4b-AZs"/>
                         <outlet property="notificationDayTextFiled" destination="qKB-2h-QUc" id="1Uy-tq-4Wa"/>
                         <outlet property="notificationSwitch" destination="Iy2-MK-zlL" id="LKG-hh-3vP"/>
+                        <outlet property="scrollView" destination="Wra-Mb-Mb4" id="NcK-w7-hx5"/>
                         <outlet property="secondView" destination="JgY-Pt-moE" id="M2p-On-gBZ"/>
                     </connections>
                 </viewController>
@@ -862,6 +863,7 @@
                         <outlet property="notificationDateTextFiled" destination="naZ-py-2vy" id="EGV-LY-8sy"/>
                         <outlet property="notificationSwitch" destination="uPi-FG-KTp" id="sQK-Oa-GFc"/>
                         <outlet property="saveButton" destination="l4v-x4-hVd" id="yI2-1d-HQr"/>
+                        <outlet property="scrollView" destination="aOI-Qj-dOa" id="pyP-1b-Gcg"/>
                         <outlet property="secondView" destination="SUf-Ph-6L4" id="w4F-us-Fsx"/>
                         <segue destination="YXa-TH-pcZ" kind="unwind" identifier="unwindFromEditVC" unwindAction="unwindFromEditVC:" id="QJU-t7-M4z"/>
                     </connections>
