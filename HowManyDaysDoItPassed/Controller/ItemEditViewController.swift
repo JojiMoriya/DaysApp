@@ -45,6 +45,14 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     
     var editItemIndexPath = 0
     
+    let dynamicTextColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
+        if traitCollection.userInterfaceStyle == .dark {
+            return .white
+        } else {
+            return .black
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setRealm()
@@ -115,7 +123,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         myTextField.layer.borderWidth = 1.5
         myTextField.layer.borderColor = UIColor.white.cgColor
         myTextField.font = UIFont.systemFont(ofSize: CGFloat(20))
-        myTextField.textColor = UIColor.black
+        myTextField.textColor = dynamicTextColor
         myTextField.backgroundColor = UIColor.systemGray6
         myTextField.tintColor = UIColor.clear //キャレット(カーソル)を消す。
 
@@ -176,7 +184,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
                 } else {
                     if editItemTitleTextFiled.text != "" {
                         saveButton.isEnabled = true
-                        saveButton.setTitleColor(UIColor.black, for: .normal)
+                        saveButton.setTitleColor(dynamicTextColor, for: .normal)
                     }
                 }
             }
@@ -193,7 +201,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
                 } else {
                     if editItemTitleTextFiled.text != "" {
                         saveButton.isEnabled = true
-                        saveButton.setTitleColor(UIColor.black, for: .normal)
+                        saveButton.setTitleColor(dynamicTextColor, for: .normal)
                     }
                 }
             }
@@ -339,13 +347,13 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
             } else {
                 if editItemTitleTextFiled.text != "" {
                     saveButton.isEnabled = true
-                    saveButton.setTitleColor(UIColor.black, for: .normal)
+                    saveButton.setTitleColor(dynamicTextColor, for: .normal)
                 }
             }
         } else {
             if editItemTitleTextFiled.text != "" {
                 saveButton.isEnabled = true
-                saveButton.setTitleColor(UIColor.black, for: .normal)
+                saveButton.setTitleColor(dynamicTextColor, for: .normal)
             }
         }
     }
@@ -438,10 +446,12 @@ extension ItemEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if notificationDay <= Date() {
             alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
             saveButton.isEnabled = false
+            saveButton.setTitleColor(UIColor.systemGray4, for: .normal)
         } else {
-            saveButton.isEnabled = true
+            if editItemTitleTextFiled.text != "" {
+                saveButton.isEnabled = true
+                saveButton.setTitleColor(dynamicTextColor, for: .normal)
+            }
         }
     }
-    
-    
 }

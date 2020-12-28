@@ -38,6 +38,14 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     private let list = ["1", "2", "3", "4", "5", "6", "7"]
     private var activeTextView = UITextView()
     
+    let dynamicTextColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
+        if traitCollection.userInterfaceStyle == .dark {
+            return .white
+        } else {
+            return .black
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         makeNowDate()
@@ -98,7 +106,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         myTextField.layer.borderWidth = 1.5
         myTextField.layer.borderColor = UIColor.white.cgColor
         myTextField.font = UIFont.systemFont(ofSize: CGFloat(20))
-        myTextField.textColor = UIColor.black
+        myTextField.textColor = dynamicTextColor
         myTextField.backgroundColor = UIColor.systemGray6
         myTextField.tintColor = UIColor.clear //キャレット(カーソル)を消す。
         
@@ -159,7 +167,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
                 } else {
                     if itemTitleTextField.text != "" {
                         addButton.isEnabled = true
-                        addButton.setTitleColor(UIColor.black, for: .normal)
+                        addButton.setTitleColor(dynamicTextColor, for: .normal)
                     }
                 }
             }
@@ -176,7 +184,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
                 } else {
                     if itemTitleTextField.text != "" {
                         addButton.isEnabled = true
-                        addButton.setTitleColor(UIColor.black, for: .normal)
+                        addButton.setTitleColor(dynamicTextColor, for: .normal)
                     }
                 }
             }
@@ -256,7 +264,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
             addButton.setTitleColor(UIColor.systemGray4, for: .normal)
         } else {
             addButton.isEnabled = true
-            addButton.setTitleColor(UIColor.black, for: .normal)
+            addButton.setTitleColor(dynamicTextColor, for: .normal)
         }
     }
     
@@ -281,13 +289,13 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
             } else {
                 if itemTitleTextField.text != "" {
                     addButton.isEnabled = true
-                    addButton.setTitleColor(UIColor.black, for: .normal)
+                    addButton.setTitleColor(dynamicTextColor, for: .normal)
                 }
             }
         } else {
             if itemTitleTextField.text != "" {
                 addButton.isEnabled = true
-                addButton.setTitleColor(UIColor.black, for: .normal)
+                addButton.setTitleColor(dynamicTextColor, for: .normal)
             }
         }
     }
@@ -379,10 +387,9 @@ extension ItemAddViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
         } else {
             if itemTitleTextField.text != "" {
                 addButton.isEnabled = true
-                addButton.setTitleColor(UIColor.black, for: .normal)
+                addButton.setTitleColor(dynamicTextColor, for: .normal)
             }
         }
     }
-    
-    
 }
+
