@@ -389,7 +389,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     
     @objc func handleKeyboardWillHideNotification(_ notification: Notification) {
         if activeTextView == editItemTextView {
-            scrollView.contentOffset.y = 0
+            scrollView.contentOffset.y = 200
         }
     }
     

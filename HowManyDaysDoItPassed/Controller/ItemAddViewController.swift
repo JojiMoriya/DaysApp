@@ -331,7 +331,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     
     @objc func handleKeyboardWillHideNotification(_ notification: Notification) {
         if activeTextView == itemMemoTextView {
-            scrollView.contentOffset.y = 0
+            scrollView.contentOffset.y = 200
         }
     }
     
