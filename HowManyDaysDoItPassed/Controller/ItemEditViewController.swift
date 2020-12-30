@@ -19,6 +19,8 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     @IBOutlet weak var notificationDateTextFiled: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var scrollView: MyScrollView!
+    @IBOutlet weak var torutsumeView: UIView!
+    @IBOutlet weak var torutsumeViewHeightConstrait: NSLayoutConstraint!
     
     private var nowDate:String!
     private var AselectedDate:Date!
@@ -334,6 +336,23 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         }
     }
     
+    //MARK: - limitDateSwitchのデリゲートメソッド
+    @IBAction func checkLimitDateWillBeSetted(_ sender: UISwitch) {
+        if limitDateSwitch.isOn == false {
+            UIView.animate(withDuration: 0.2) {
+                self.torutsumeView.alpha = 0
+            } completion: { (value:Bool) in
+                self.torutsumeView.isHidden = true
+                self.torutsumeViewHeightConstrait.constant = 0
+            }
+        } else {
+            self.torutsumeView.isHidden = false
+            UIView.animate(withDuration: 0.4, animations:  {
+                self.torutsumeView.alpha = 1.0
+                self.torutsumeViewHeightConstrait.constant = 235
+            }, completion: nil)
+        }
+    }
     //MARK: - 通知スウィッチのデリゲートメソッド
     @IBAction func checkNotificationIsCollect(_ sender: UISwitch) {
         if notificationSwitch.isOn == true {
