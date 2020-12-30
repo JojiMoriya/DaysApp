@@ -18,6 +18,8 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     @IBOutlet weak var notificationDayTextFiled: UITextField!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var scrollView: MyScrollView!
+    @IBOutlet weak var torutsumeView: UIView!
+    @IBOutlet weak var torutsumeViewHeightConstraint: NSLayoutConstraint!
     
     var itemTitle = ""
     var launchDate = Date()
@@ -56,6 +58,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         setNotificationDatePicker()
         setAddButton()
         setSwitch()
+        setTorutsumeView()
         
         itemTitleTextField.delegate = self
         itemMemoTextView.delegate = self
@@ -229,6 +232,12 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         notificationSwitch.isOn = false
     }
     
+    func setTorutsumeView() {
+        torutsumeView.isHidden = true
+        torutsumeViewHeightConstraint.constant = 0
+        torutsumeView.alpha = 1.0
+    }
+    
     //MARK: - 通知の設定
     func setNotification() {
         let untilDay = notificationDayTextFiled.text
@@ -268,6 +277,23 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         }
     }
     
+    //MARK: - limitDateSwitchのデリゲートメソッド
+    @IBAction func checkLimitDateWillBeSetted(_ sender: UISwitch) {
+        if limitDateSwitch.isOn == false {
+            UIView.animate(withDuration: 0.2) {
+                self.torutsumeView.alpha = 0
+            } completion: { (value:Bool) in
+                self.torutsumeView.isHidden = true
+                self.torutsumeViewHeightConstraint.constant = 0
+            }
+        } else {
+            self.torutsumeView.isHidden = false
+            UIView.animate(withDuration: 0.4, animations:  {
+                self.torutsumeView.alpha = 1.0
+                self.torutsumeViewHeightConstraint.constant = 235
+            }, completion: nil)
+        }
+    }
     //MARK: - notificationSwitchのデリゲートメソッド
     @IBAction func checkNotificationIsCollect(_ sender: UISwitch) {
         if notificationSwitch.isOn == true {
