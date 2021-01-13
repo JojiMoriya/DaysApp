@@ -29,12 +29,12 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     var notificationDate = ""
     
     private var nowDate:String!
-    private var AselectedDate:Date!
-    private var BselectedDate:Date!
-    private var APicker: UIDatePicker!
-    private var ATextField = UITextField()
-    private var BPicker: UIDatePicker!
-    private var BTextField = UITextField()
+    private var launchDatePickerSelectedDate:Date!
+    private var limitDatePickerSelectedDate:Date!
+    private var launchDatePicker: UIDatePicker!
+    private var launchDatePickerTextField = UITextField()
+    private var limitDatePicker: UIDatePicker!
+    private var limitDatePickerTextField = UITextField()
     
     private var pickerView: UIPickerView = UIPickerView()
     private let list = ["1", "2", "3", "4", "5", "6", "7"]
@@ -79,8 +79,8 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         formatter.timeZone = NSTimeZone.system
         formatter.dateFormat = "yyyy年M月d日"
         nowDate = formatter.string(from: today as Date)
-        AselectedDate = today
-        BselectedDate = tomorrow
+        launchDatePickerSelectedDate = today
+        limitDatePickerSelectedDate = tomorrow
     }
     
     func makePickerBaseView(_ isA:Bool) {
@@ -92,11 +92,11 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         myTextField.text = isA ? "\(nowDate!)" : "----年--月--日"
         
         if isA {
-            ATextField = myTextField
-            firstView.addSubview(ATextField)
+            launchDatePickerTextField = myTextField
+            firstView.addSubview(launchDatePickerTextField)
         } else {
-            BTextField = myTextField
-            secondView.addSubview(BTextField)
+            limitDatePickerTextField = myTextField
+            secondView.addSubview(limitDatePickerTextField)
         }
     }
     
@@ -114,11 +114,11 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         myTextField.tintColor = UIColor.clear //キャレット(カーソル)を消す。
         
         if isA {
-            APicker = makePicker(isA)
-            myTextField.inputView = APicker
+            launchDatePicker = makePicker(isA)
+            myTextField.inputView = launchDatePicker
         } else {
-            BPicker = makePicker(isA)
-            myTextField.inputView = BPicker
+            limitDatePicker = makePicker(isA)
+            myTextField.inputView = limitDatePicker
         }
         myTextField.textAlignment = .center
         
@@ -144,26 +144,26 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
         
         let mySelectedDate = formatter.string(from: sender.date)
         if sender.tag == 1 {
-            ATextField.text = mySelectedDate
-            AselectedDate = sender.date
+            launchDatePickerTextField.text = mySelectedDate
+            launchDatePickerSelectedDate = sender.date
         } else {
-            BTextField.text = mySelectedDate
-            BselectedDate = sender.date
+            limitDatePickerTextField.text = mySelectedDate
+            limitDatePickerSelectedDate = sender.date
         }
         
         if sender.tag == 1 {
-            let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: AselectedDate)!
-            BPicker.minimumDate = minimumDate
-            if AselectedDate > BselectedDate {
-                BTextField.text = (formatter.string(from: minimumDate))
-                BPicker.date = minimumDate
+            let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: launchDatePickerSelectedDate)!
+            limitDatePicker.minimumDate = minimumDate
+            if launchDatePickerSelectedDate > limitDatePickerSelectedDate {
+                limitDatePickerTextField.text = (formatter.string(from: minimumDate))
+                limitDatePicker.date = minimumDate
             }
             if notificationSwitch.isOn == true {
                 let untilDay = notificationDayTextFiled.text
                 let day = Int(untilDay!)! * -1
-                let limitday = BselectedDate!
+                let limitday = limitDatePickerSelectedDate!
                 let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
-                if notificationDay <= AselectedDate {
+                if notificationDay <= launchDatePickerSelectedDate {
                     alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
                     addButton.isEnabled = false
                     addButton.setTitleColor(UIColor.systemGray4, for: .normal)
@@ -178,9 +178,9 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
             if notificationSwitch.isOn == true {
                 let untilDay = notificationDayTextFiled.text
                 let day = Int(untilDay!)! * -1
-                let limitday = BselectedDate!
+                let limitday = limitDatePickerSelectedDate!
                 let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
-                if notificationDay <= AselectedDate {
+                if notificationDay <= launchDatePickerSelectedDate {
                     alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
                     addButton.isEnabled = false
                     addButton.setTitleColor(UIColor.systemGray4, for: .normal)
@@ -196,8 +196,8 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         itemTitleTextField.endEditing(true)
-        ATextField.endEditing(true)
-        BTextField.endEditing(true)
+        launchDatePickerTextField.endEditing(true)
+        limitDatePickerTextField.endEditing(true)
         itemMemoTextView.endEditing(true)
         notificationDayTextFiled.endEditing(true)
     }
@@ -205,7 +205,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     //MARK: - 各種部品の初期設定
     func setMinimumDate() {
         let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
-        BPicker.minimumDate = minimumDate
+        limitDatePicker.minimumDate = minimumDate
     }
     func setItemMemoTextView() {
         itemMemoTextView.layer.borderColor = UIColor.systemGray4.cgColor
@@ -242,7 +242,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     func setNotification() {
         let untilDay = notificationDayTextFiled.text
         let day = Int(untilDay!)! * -1
-        let limitday = BPicker.date
+        let limitday = limitDatePicker.date
         let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
         
         var dateComponents = Calendar.current.dateComponents([.calendar, .year, .month, .day], from: notificationDay)
@@ -307,7 +307,7 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
             
             let untilDay = notificationDayTextFiled.text
             let day = Int(untilDay!)! * -1
-            let limitday = BPicker.date
+            let limitday = limitDatePicker.date
             let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
             if notificationDay <= Date() {
                 addButton.isEnabled = false
@@ -365,12 +365,12 @@ class ItemAddViewController: UIViewController, UITextFieldDelegate, UNUserNotifi
     @IBAction func addButtonPressed(_ sender: UIButton) {
         itemTitle = itemTitleTextField.text!
         itemMemo = itemMemoTextView.text
-        launchDate = AselectedDate
+        launchDate = launchDatePickerSelectedDate
         
         if limitDateSwitch.isOn == true {
-            limitDate = BselectedDate
+            limitDate = limitDatePickerSelectedDate
         } else {
-            limitDate = AselectedDate //期限日が設定されない場合は、開始日を格納しておき、それを元に後々の処理を判別
+            limitDate = launchDatePickerSelectedDate //期限日が設定されない場合は、開始日を格納しておき、それを元に後々の処理を判別
         }
         
         if notificationSwitch.isOn == true && limitDateSwitch.isOn == true {
@@ -404,7 +404,7 @@ extension ItemAddViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
         self.notificationDayTextFiled.text = list[row]
         let untilDay = notificationDayTextFiled.text
         let day = Int(untilDay!)! * -1
-        let limitday = BPicker.date
+        let limitday = limitDatePicker.date
         let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
         if notificationDay <= Date() {
             alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")

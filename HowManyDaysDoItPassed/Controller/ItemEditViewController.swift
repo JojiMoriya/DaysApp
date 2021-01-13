@@ -23,12 +23,12 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     @IBOutlet weak var torutsumeViewHeightConstrait: NSLayoutConstraint!
     
     private var nowDate:String!
-    private var AselectedDate:Date!
-    private var BselectedDate:Date!
-    private var APicker: UIDatePicker!
-    private var ATextField = UITextField()
-    private var BPicker: UIDatePicker!
-    private var BTextField = UITextField()
+    private var launchDatePickerSelectedDate:Date!
+    private var limitDatePickerSelectedDate:Date!
+    private var launchDatePicker: UIDatePicker!
+    private var launchDatePickerTextField = UITextField()
+    private var limitDatePicker: UIDatePicker!
+    private var limitDatePickerTextField = UITextField()
     
     var editedItemTitle = ""
     var editedLaunchDate = Date()
@@ -90,13 +90,13 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     
     //MARK: - DatePickerの実装
     func makeNowDate(){
-        AselectedDate = itemList[editItemIndexPath].launchDate
+        launchDatePickerSelectedDate = itemList[editItemIndexPath].launchDate
         if itemList[editItemIndexPath].launchDate != itemList[editItemIndexPath].limitDate {
-            BselectedDate = itemList[editItemIndexPath].limitDate
+            limitDatePickerSelectedDate = itemList[editItemIndexPath].limitDate
         } else {
             let launchDay = itemList[editItemIndexPath].launchDate
             let nextDay = Calendar.current.date(byAdding: .day, value: +1, to: launchDay)!
-            BselectedDate = nextDay
+            limitDatePickerSelectedDate = nextDay
         }
     }
     
@@ -108,11 +108,11 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         formatter.dateFormat = "yyyy年M月d日"
 
         if isA {
-            ATextField = myTextField
-            firstView.addSubview(ATextField)
+            launchDatePickerTextField = myTextField
+            firstView.addSubview(launchDatePickerTextField)
         } else {
-            BTextField = myTextField
-            secondView.addSubview(BTextField)
+            limitDatePickerTextField = myTextField
+            secondView.addSubview(limitDatePickerTextField)
         }
     }
     
@@ -130,11 +130,11 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         myTextField.tintColor = UIColor.clear //キャレット(カーソル)を消す。
 
         if isA {
-            APicker = makePicker(isA)
-            myTextField.inputView = APicker
+            launchDatePicker = makePicker(isA)
+            myTextField.inputView = launchDatePicker
         } else {
-            BPicker = makePicker(isA)
-            myTextField.inputView = BPicker
+            limitDatePicker = makePicker(isA)
+            myTextField.inputView = limitDatePicker
         }
         myTextField.textAlignment = .center
         
@@ -160,26 +160,26 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         
         let mySelectedDate = formatter.string(from: sender.date)
         if sender.tag == 1 {
-            ATextField.text = mySelectedDate
-            AselectedDate = sender.date
+            launchDatePickerTextField.text = mySelectedDate
+            launchDatePickerSelectedDate = sender.date
         } else {
-            BTextField.text = mySelectedDate
-            BselectedDate = sender.date
+            limitDatePickerTextField.text = mySelectedDate
+            limitDatePickerSelectedDate = sender.date
         }
         
         if sender.tag == 1 {
-            let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: AselectedDate)!
-            BPicker.minimumDate = minimumDate
-            if AselectedDate > BselectedDate {
-                BTextField.text = (formatter.string(from: minimumDate))
-                BPicker.date = minimumDate
+            let minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: launchDatePickerSelectedDate)!
+            limitDatePicker.minimumDate = minimumDate
+            if launchDatePickerSelectedDate > limitDatePickerSelectedDate {
+                limitDatePickerTextField.text = (formatter.string(from: minimumDate))
+                limitDatePicker.date = minimumDate
             }
             if notificationSwitch.isOn == true {
                 let untilDay = notificationDateTextFiled.text
                 let day = Int(untilDay!)! * -1
-                let limitday = BselectedDate!
+                let limitday = limitDatePickerSelectedDate!
                 let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
-                if notificationDay <= AselectedDate {
+                if notificationDay <= launchDatePickerSelectedDate {
                     alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
                     saveButton.isEnabled = false
                     saveButton.setTitleColor(UIColor.systemGray4, for: .normal)
@@ -194,9 +194,9 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
             if notificationSwitch.isOn == true {
                 let untilDay = notificationDateTextFiled.text
                 let day = Int(untilDay!)! * -1
-                let limitday = BselectedDate!
+                let limitday = limitDatePickerSelectedDate!
                 let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
-                if notificationDay <= AselectedDate {
+                if notificationDay <= launchDatePickerSelectedDate {
                     alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
                     saveButton.isEnabled = false
                     saveButton.setTitleColor(UIColor.systemGray4, for: .normal)
@@ -212,8 +212,8 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         editItemTitleTextFiled.endEditing(true)
-        ATextField.endEditing(true)
-        BTextField.endEditing(true)
+        launchDatePickerTextField.endEditing(true)
+        limitDatePickerTextField.endEditing(true)
         editItemTextView.endEditing(true)
         notificationDateTextFiled.endEditing(true)
     }
@@ -222,18 +222,18 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     
     func setAllContent() {
         editItemTitleTextFiled.text = itemList[editItemIndexPath].itemTitle
-        ATextField.text = dateFormat(date: itemList[editItemIndexPath].launchDate)
-        AselectedDate = itemList[editItemIndexPath].launchDate
-        APicker.date = itemList[editItemIndexPath].launchDate
-        BTextField.text = setLimitDate()
+        launchDatePickerTextField.text = dateFormat(date: itemList[editItemIndexPath].launchDate)
+        launchDatePickerSelectedDate = itemList[editItemIndexPath].launchDate
+        launchDatePicker.date = itemList[editItemIndexPath].launchDate
+        limitDatePickerTextField.text = setLimitDate()
         if itemList[editItemIndexPath].launchDate == itemList[editItemIndexPath].limitDate {
             let launchDay = itemList[editItemIndexPath].launchDate
             let nextDay = Calendar.current.date(byAdding: .day, value: +1, to: launchDay)!
-            BselectedDate = nextDay
-            BPicker.date = nextDay
+            limitDatePickerSelectedDate = nextDay
+            limitDatePicker.date = nextDay
         } else {
-            BselectedDate = itemList[editItemIndexPath].limitDate
-            BPicker.date = itemList[editItemIndexPath].limitDate
+            limitDatePickerSelectedDate = itemList[editItemIndexPath].limitDate
+            limitDatePicker.date = itemList[editItemIndexPath].limitDate
         }
         
         notificationDateTextFiled.inputView = pickerView
@@ -270,10 +270,10 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     
     func setlimitDatePicker() {
         if itemList[editItemIndexPath].limitDate != itemList[editItemIndexPath].launchDate {
-            BPicker.date = itemList[editItemIndexPath].limitDate
+            limitDatePicker.date = itemList[editItemIndexPath].limitDate
         } else {
-            BPicker.date = Date()
-            BPicker.minimumDate = itemList[editItemIndexPath].launchDate
+            limitDatePicker.date = Date()
+            limitDatePicker.minimumDate = itemList[editItemIndexPath].launchDate
         }
     }
     
@@ -293,7 +293,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         let notificationTitle = editItemTitleTextFiled.text
         let untilDay = notificationDateTextFiled.text
         let day = Int(untilDay!)! * -1
-        let limitday = BPicker.date
+        let limitday = limitDatePicker.date
         let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
         
         var dateComponents = Calendar.current.dateComponents([.calendar, .year, .month, .day], from: notificationDay)
@@ -358,7 +358,7 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
         if notificationSwitch.isOn == true {
             let untilDay = notificationDateTextFiled.text
             let day = Int(untilDay!)! * -1
-            let limitday = BPicker.date
+            let limitday = limitDatePicker.date
             let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
             if notificationDay <= Date() {
                 saveButton.isEnabled = false
@@ -415,11 +415,11 @@ class ItemEditViewController: UIViewController, UITextFieldDelegate, UNUserNotif
     //MARK: - セーブボタンが押された際のメソッド
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         editedItemTitle = editItemTitleTextFiled.text ?? ""
-        editedLaunchDate = AselectedDate
+        editedLaunchDate = launchDatePickerSelectedDate
         if limitDateSwitch.isOn == true {
-            editedLimitDate = BselectedDate
+            editedLimitDate = limitDatePickerSelectedDate
         } else {
-            editedLimitDate = AselectedDate
+            editedLimitDate = launchDatePickerSelectedDate
         }
         editedItemMemo = editItemTextView.text
         
@@ -460,7 +460,7 @@ extension ItemEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         self.notificationDateTextFiled.text = list[row]
         let untilDay = notificationDateTextFiled.text
         let day = Int(untilDay!)! * -1
-        let limitday = BPicker.date
+        let limitday = limitDatePicker.date
         let notificationDay = Calendar.current.date(byAdding: .day, value: day, to: limitday)!
         if notificationDay <= Date() {
             alert(title: "注意", message: "通知日は明日以降になるよう設定してください。")
